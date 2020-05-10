@@ -1,15 +1,10 @@
-import Vue from 'vue'
-import App from './App.vue'
-import Vuex from 'vuex'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import App from "./App.vue";
 
-import './assets/css/main.css'
+import "./assets/css/main.css";
 
-Vue.config.productionTip = false
-
-Vue.use(Vuex)
-Vue.use(VueRouter)
+Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");
