@@ -47,8 +47,8 @@
     </div>
     <div class="bg-indigo-600 p-10 w-full md:h-screen flex flex-col justify-center md:items-start">
       <p class="text-4xl text-gray-200 font-bold leading-none md:text-6xl">
-        Marque suas <br class="hidden md:inline" />
-        consultas online!
+        Registe-se para <br class="hidden md:inline" />
+        marcar suas consultas!
       </p>
     </div>
   </div>
