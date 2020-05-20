@@ -10,7 +10,6 @@
         </div>
         <nav class="">
           <router-link class="hidden md:inline pr-8" to="/example">Example</router-link>
-          <router-link class="hidden md:inline pr-8" to="/example">Login</router-link>
           <router-link class="px-3 py-1 bg-indigo-500 text-white uppercase text-lg rounded" to="/register-patient"
             >Entrar</router-link
           >
