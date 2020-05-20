@@ -47,37 +47,9 @@
 
     <footer class="text-gray-500 mt-10 font-family-baloo text-center">
       <hr />
-      <p class="py-3">
-        Todos direitos reservados! {{ testAxios() }} <span class="font-bold tracking-wider">Kliniek &copy; 2020</span>
-      </p>
+      <p class="py-3">Todos direitos reservados! <span class="font-bold tracking-wider">Kliniek &copy; 2020</span></p>
     </footer>
   </div>
 </template>
 
-<script>
-import http, { credentials } from "@/axios.js";
-export default {
-  data() {
-    return {
-      error: "",
-      user: { username: "pamossecuambe@gmail.com", password: "sysAdminPa$$" },
-    };
-  },
-  methods: {
-    testAxios() {
-      Object.assign(this.user, credentials);
-      http
-        .post("/oauth/token", this.user)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((err) => {
-          this.error = err;
-          console.log(err.response);
-        });
-    },
-  },
-};
-</script>
-
-<style scoped></style>
+<script></script>
