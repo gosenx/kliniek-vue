@@ -28,10 +28,10 @@
         >Criar Conta &raquo;</router-link
       >
     </div>
-    <div class="py-4 tracking-wider font-family-narrow mt-8">
+    <div class="py-4 tracking-wider font-family-baloo mt-8">
       <div class="flex flex-col-reverse md:flex-row justify-between h-full w-11/12 m-auto">
-        <div class="w-full h-full md:w-1/2">
-          <h2 class="text-5xl font-bold text-gray-800">Conheça os serviços</h2>
+        <div class="w-full h-full md:w-1/2 mt-16 md:mt-0 md:mr-5">
+          <h2 class="text-5xl font-bold leading-none uppercase text-gray-800 mb-5">Conheça os serviços</h2>
           <ul class="text-2xl list-disc leading-7 tracking-wider ml-6">
             <li class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing.</li>
             <li class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing.</li>
