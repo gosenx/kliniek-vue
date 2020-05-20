@@ -10,7 +10,7 @@
         </div>
         <nav class="">
           <router-link class="hidden md:inline pr-8" to="/example">Example</router-link>
-          <router-link class="px-3 py-1 bg-indigo-500 text-white uppercase text-lg rounded" to="/register-patient"
+          <router-link class="px-3 py-1 bg-indigo-500 text-white uppercase text-lg rounded" to="/login"
             >Entrar</router-link
           >
         </nav>
@@ -18,18 +18,20 @@
     </div>
     <div class="w-full h-64 md:text-center bg-red-600 font-family-baloo p-4">
       <p class="text-white font-semibold leading-none text-3xl mb-4 md:text-5xl mt-10">
-        Nunca foi tao facil <br class="hidden md:inline" />
+        Nunca foi tão fácil <br class="hidden md:inline" />
         marcar <span class="text-yellow-300">consultas</span>
       </p>
-      <p class="mb-4 text-gray-200 text-lg">Ja imaginou ter o seu historico medico na palma da sua mao?</p>
-      <a href="#" class="rounded bg-indigo-700 font-medium tracking-wide text-white text-center text-xl py-1 px-4"
-        >Criar Conta &raquo;</a
+      <p class="mb-4 text-gray-200 text-lg">Já imaginou ter o seu histórico médico na palma da sua mão?</p>
+      <router-link
+        to="/signup"
+        class="rounded bg-indigo-700 font-medium tracking-wide text-white text-center text-xl py-1 px-4"
+        >Criar Conta &raquo;</router-link
       >
     </div>
     <div class="py-4 tracking-wider font-family-narrow mt-8">
       <div class="flex flex-col-reverse md:flex-row justify-between h-full w-11/12 m-auto">
         <div class="w-full h-full md:w-1/2">
-          <h2 class="text-6xl font-bold text-gray-800">A title in here</h2>
+          <h2 class="text-5xl font-bold text-gray-800">Conheça os serviços</h2>
           <ul class="text-2xl list-disc leading-7 tracking-wider ml-6">
             <li class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing.</li>
             <li class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing.</li>
