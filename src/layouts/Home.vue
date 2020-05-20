@@ -16,6 +16,7 @@
         </nav>
       </header>
     </div>
+
     <div class="w-full h-64 md:text-center bg-red-600 font-family-baloo p-4">
       <p class="text-white font-semibold leading-none text-3xl mb-4 md:text-5xl mt-10">
         Nunca foi tão fácil <br class="hidden md:inline" />
@@ -28,6 +29,7 @@
         >Criar Conta &raquo;</router-link
       >
     </div>
+
     <div class="py-4 tracking-wider font-family-baloo mt-8">
       <div class="flex flex-col-reverse md:flex-row justify-between h-full w-11/12 m-auto">
         <div class="w-full h-full md:w-1/2 mt-16 md:mt-0 md:mr-5">
