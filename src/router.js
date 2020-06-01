@@ -1,7 +1,10 @@
+import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "./layouts/Home";
 import Example from "./components/Example";
 import Signup from "./layouts/Signup";
+
+Vue.use(VueRouter);
 
 export const router = new VueRouter({
   base: "/",
