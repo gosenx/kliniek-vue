@@ -33,13 +33,13 @@
             <option value="male">Masculino</option>
             <option value="female">Femenino</option>
           </select>
-        </div>
+        </div> 
 
         <div class="flex justify-between items-center">
           <button class="btn-normal uppercase" type="submit">
             Sign up
           </button>
-          <a class="cursor-pointer font-semibold underline text-xl leading-none text-indigo-700" href="#" type="submit">
+          <a class="cursor-pointer font-semibold underline text-sm leading-none text-indigo-700" href="#" type="submit">
             Possui uma conta? <br class="md:hidden" /><span class="">Logar &raquo;</span></a
           >
         </div>
@@ -55,7 +55,29 @@
 </template>
 
 <script>
-export default {};
+import http, { credentials } from "@/axios";
+export default {
+  data() {
+    return {
+      error: "",
+      user: { username: "pamossecuambe@gmail.com", password: "sysAdminPa$$" },
+    };
+  },
+  methods: {
+    testAxios() {
+      Object.assign(this.user, credentials);
+      http
+        .post("/oauth/token", this.user)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => {
+          this.error = err;
+          console.log(err.response);
+        });
+    },
+  },
+};
 </script>
 
 <style></style>
