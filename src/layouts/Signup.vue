@@ -2,7 +2,7 @@
   <div>
     <div class="flex-col md:flex md:flex-row w-full min-h-screen font-family-baloo">
       <div class="w-full bg-indigo-700 md:flex md:items-center p-5">
-        <h1 class="text-3xl md:text-6xl font-bold md:font-semibold text-center md:text-left text-white leading-none">
+        <h1 class="text-3xl md:text-6xl md:mb-8 font-bold md:font-semibold text-center md:text-left text-white leading-none">
           Registe-se para marcar suas <br class="hidden md:inline" />
           consultas online.
         </h1>
