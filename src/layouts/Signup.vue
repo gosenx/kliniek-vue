@@ -1,55 +1,53 @@
 <template>
-  <div class="flex flex-col-reverse bg-gray-300 md:flex-row">
-    <div class="w-full flex flex-col justify-center h-screen bg-white p-5 md:p-10">
-      <form action="" method="post">
-        <div class="form-group">
-          <label class="label-normal" for="name">Nome Completo</label>
-          <input class="input-normal" placeholder="Carla Armindo Maposse" type="text" id="name" required />
-        </div>
+  <div>
+    <div class="flex-col md:flex md:flex-row w-full min-h-screen font-family-baloo">
+      <div class="w-full bg-indigo-700 md:flex md:items-center p-5">
+        <h1 class="text-3xl md:text-6xl font-bold md:font-semibold text-center md:text-left text-white leading-none">
+          Registe-se para marcar suas <br class="hidden md:inline" />
+          consultas online.
+        </h1>
+      </div>
+      <div class="w-full p-5 md:flex md:flex-col md:justify-center">
+        <form action="">
+          <div class="form-group">
+            <label for="fullname">Nome</label>
+            <input type="text" class="input-normal" placeholder="Claudia Mirela Sandiru" id="fullname" />
+            <p class="hidden text-red-700 text-sm font-semibold">Campo obrigatorio!</p>
+          </div>
 
-        <div class="form-group">
-          <label class="label-normal" for="email">Email</label>
-          <input class="input-normal" placeholder="example@email.com" type="email" id="email" required />
-        </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="input-normal" placeholder="claudia.mirela@bobari.co.mz" id="email" />
+            <p class="hidden text-red-700 text-sm font-semibold">Campo obrigatorio!</p>
+          </div>
 
-        <div class="form-group">
-          <label class="label-normal" for="bi">Bilhete de Identidade</label>
-          <input class="input-normal" placeholder="110300252626D" type="text" id="bi" />
-        </div>
+          <div class="form-group">
+            <label for="gender">Genero</label>
+            <select id="gender" class="input-normal">
+              <option value="male">Masculino</option>
+              <option value="female">Femenino</option>
+            </select>
+            <p class="hidden text-red-700 text-sm font-semibold">Campo obrigatorio!</p>
+          </div>
 
-        <div class="form-group">
-          <label class="label-normal" for="birthdate">Data de Nascimento</label>
-          <input class="input-normal" type="date" id="birthdate" />
-        </div>
+          <div class="form-group">
+            <label for="password">Senha</label>
+            <input class="input-normal" type="password" placeholder="***************" />
+            <p class="hidden text-red-700 text-sm font-semibold">Campo obrigatorio!</p>
+          </div>
 
-        <div class="form-group">
-          <label class="label-normal" for="password">Senha</label>
-          <input class="input-normal" placeholder="**************" type="password" id="password" required />
-        </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirmar senha</label>
+            <input class="input-normal" type="confirm-password" placeholder="***************" />
+            <p class="hidden text-red-700 text-sm font-semibold">Campo obrigatorio!</p>
+          </div>
 
-        <div class="form-group">
-          <label class="label-normal" for="gender">Genero</label>
-          <select class="input-normal" id="gender" required>
-            <option value="male">Masculino</option>
-            <option value="female">Femenino</option>
-          </select>
-        </div> 
-
-        <div class="flex justify-between items-center">
-          <button class="btn-normal uppercase" type="submit">
-            Sign up
-          </button>
-          <a class="cursor-pointer font-semibold underline text-sm leading-none text-indigo-700" href="#" type="submit">
-            Possui uma conta? <br class="md:hidden" /><span class="">Logar &raquo;</span></a
-          >
-        </div>
-      </form>
-    </div>
-    <div class="bg-indigo-600 p-10 w-full md:h-screen flex flex-col justify-center md:items-start">
-      <p class="text-4xl text-gray-200 font-bold leading-none md:text-6xl">
-        Registe-se para <br class="hidden md:inline" />
-        marcar suas consultas!
-      </p>
+          <button class="btn-normal">Registar</button>
+          <div class="w-full mt-2 text-gray-600">
+            Já possui uma conta? <a class="text-blue-700 hover:underline" href="/login">&rArr;Entrar</a>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
