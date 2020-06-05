@@ -21,8 +21,8 @@
               placeholder="Claudia Mirela Sandiru"
               id="fullname"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="errors.fullname.length > 0">
-              {{ errors.fullname[0] }}
+            <p class="text-red-700 text-sm font-semibold" v-show="error.fullname.length > 0">
+              {{ error.fullname[0] }}
             </p>
           </div>
 
@@ -36,8 +36,8 @@
               placeholder="claudia.mirela@bobari.co.mz"
               id="email"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="errors.email.length > 0">
-              {{ errors.email[0] }}
+            <p class="text-red-700 text-sm font-semibold" v-show="error.email.length > 0">
+              {{ error.email[0] }}
             </p>
           </div>
 
@@ -47,7 +47,7 @@
               <option value="male">Masculino</option>
               <option value="female">Femenino</option>
             </select>
-            <p class="text-red-700 text-sm font-semibold" v-show="errors.gender.length > 0">{{ errors.gender[0] }}</p>
+            <p class="text-red-700 text-sm font-semibold" v-show="error.gender.length > 0">{{ error.gender[0] }}</p>
           </div>
 
           <div class="form-group">
@@ -59,8 +59,8 @@
               type="password"
               placeholder="***************"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="errors.password.length > 0">
-              {{ errors.password[0] }}
+            <p class="text-red-700 text-sm font-semibold" v-show="error.password.length > 0">
+              {{ error.password[0] }}
             </p>
           </div>
 
@@ -73,8 +73,8 @@
               type="password"
               placeholder="***************"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="errors.confirm_password.length > 0">
-              {{ errors.confirm_password[0] }}
+            <p class="text-red-700 text-sm font-semibold" v-show="error.confirm_password.length > 0">
+              {{ error.confirm_password[0] }}
             </p>
           </div>
 
@@ -94,7 +94,7 @@ import axios, { apiCredentials } from "@/axios";
 export default {
   data() {
     return {
-      errors: {
+      error: {
         fullname: [],
         email: [],
         gender: [],
@@ -107,53 +107,53 @@ export default {
   },
   methods: {
     validateInput() {
-      this.errors.fullname = [];
-      this.errors.email = [];
-      this.errors.gender = [];
-      this.errors.password = [];
-      this.errors.confirm_password = [];
+      this.error.fullname = [];
+      this.error.email = [];
+      this.error.gender = [];
+      this.error.password = [];
+      this.error.confirm_password = [];
 
       const matchEmail = /\S+@\S+\.\S+/;
 
       if (!this.data.fullname) {
-        this.errors.fullname.push("Campo obrigatório!");
+        this.error.fullname.push("Campo obrigatório!");
       } else if (this.data.fullname.trim().split(" ").length <= 1) {
-        this.errors.fullname.push("O nome deve ter no mínimo duas palavras.");
+        this.error.fullname.push("O nome deve ter no mínimo duas palavras.");
       }
 
       if (!this.data.email) {
-        this.errors.email.push("Campo obrigatório!");
+        this.error.email.push("Campo obrigatório!");
       } else {
         if (!matchEmail.test(this.data.email)) {
-          this.errors.email.push("Formato de email inválido!");
+          this.error.email.push("Formato de email inválido!");
         }
       }
 
       if (!this.data.gender) {
-        this.errors.gender.push("Campo obrigatório!");
+        this.error.gender.push("Campo obrigatório!");
       }
 
       if (!this.data.password) {
-        this.errors.password.push("Campo obrigatório!");
+        this.error.password.push("Campo obrigatório!");
       } else if (this.data.password.length < 6) {
-        this.errors.password.push("A senha deve ter no mínimo 6 caracteres!");
+        this.error.password.push("A senha deve ter no mínimo 6 caracteres!");
       }
 
       if (!this.confirm_password) {
-        this.errors.confirm_password.push("Campo obrigatório!");
+        this.error.confirm_password.push("Campo obrigatório!");
       }
 
       if (this.data.password && this.confirm_password && this.data.password !== this.confirm_password) {
-        this.errors.confirm_password.push("Este campo não coincide com a senha fornecida.");
+        this.error.confirm_password.push("Este campo não coincide com a senha fornecida.");
       }
     },
     noInputErrorsFound() {
       if (
-        this.errors.fullname.length === 0 &&
-        this.errors.email.length === 0 &&
-        this.errors.gender.length === 0 &&
-        this.errors.password.length === 0 &&
-        this.errors.confirm_password.length === 0
+        this.error.fullname.length === 0 &&
+        this.error.email.length === 0 &&
+        this.error.gender.length === 0 &&
+        this.error.password.length === 0 &&
+        this.error.confirm_password.length === 0
       )
         return true;
     },
@@ -166,13 +166,13 @@ export default {
         axios
           .post("api/signup", this.data)
           .then((res) => {
-            // store in the browser
+            // store token in the browser
             console.log(res);
           })
           .catch((err) => {
             let errors = err.response.data.errors;
             if ({}.hasOwnProperty.call(errors, "email")) {
-              this.errors.email.push(...errors.email);
+              this.error.email.push(...errors.email);
             }
           });
       }
