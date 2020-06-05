@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export let credentials = {
+export let apiCredentials = {
   grant_type: "password",
   client_id: 4,
   client_secret: "HhorKAj21iNiTq9zEaFrkLGkCpfrMhhp0MiocBS4",

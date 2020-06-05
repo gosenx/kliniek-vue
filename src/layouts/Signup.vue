@@ -2,7 +2,9 @@
   <div>
     <div class="flex-col md:flex md:flex-row w-full min-h-screen font-family-baloo">
       <div class="w-full bg-indigo-700 md:flex md:items-center p-5">
-        <h1 class="text-3xl md:text-6xl md:mb-8 font-bold md:font-semibold text-center md:text-left text-white leading-none">
+        <h1
+          class="text-3xl md:text-6xl md:mb-8 font-bold md:font-semibold text-center md:text-left text-white leading-none"
+        >
           Registe-se para marcar suas <br class="hidden md:inline" />
           consultas online.
         </h1>
@@ -15,7 +17,7 @@
               type="text"
               class="input-normal"
               required
-              v-model="user.fullname"
+              v-model="data.fullname"
               placeholder="Claudia Mirela Sandiru"
               id="fullname"
             />
@@ -29,7 +31,7 @@
             <input
               type="email"
               class="input-normal"
-              v-model="user.email"
+              v-model="data.email"
               required
               placeholder="claudia.mirela@bobari.co.mz"
               id="email"
@@ -41,7 +43,7 @@
 
           <div class="form-group">
             <label for="gender">Genero</label>
-            <select id="gender" required v-model="user.gender" class="input-normal">
+            <select id="gender" required v-model="data.gender" class="input-normal">
               <option value="male">Masculino</option>
               <option value="female">Femenino</option>
             </select>
@@ -53,7 +55,7 @@
             <input
               class="input-normal"
               required
-              v-model="user.password"
+              v-model="data.password"
               type="password"
               placeholder="***************"
             />
@@ -87,6 +89,8 @@
 </template>
 
 <script>
+import axios, { apiCredentials } from "@/axios";
+
 export default {
   data() {
     return {
@@ -97,7 +101,7 @@ export default {
         password: [],
         confirm_password: [],
       },
-      user: {},
+      data: {},
       confirm_password: "",
     };
   },
@@ -111,28 +115,27 @@ export default {
 
       const matchEmail = /\S+@\S+\.\S+/;
 
-      if (!this.user.fullname) {
+      if (!this.data.fullname) {
         this.errors.fullname.push("Campo obrigatório!");
-      } else if (this.user.fullname.trim().split(" ").length <= 1) {
-        console.log(this.user.fullname.trim().split(" ").length);
+      } else if (this.data.fullname.trim().split(" ").length <= 1) {
         this.errors.fullname.push("O nome deve ter no mínimo duas palavras.");
       }
 
-      if (!this.user.email) {
+      if (!this.data.email) {
         this.errors.email.push("Campo obrigatório!");
       } else {
-        if (!matchEmail.test(this.user.email)) {
+        if (!matchEmail.test(this.data.email)) {
           this.errors.email.push("Formato de email inválido!");
         }
       }
 
-      if (!this.user.gender) {
+      if (!this.data.gender) {
         this.errors.gender.push("Campo obrigatório!");
       }
 
-      if (!this.user.password) {
+      if (!this.data.password) {
         this.errors.password.push("Campo obrigatório!");
-      } else if (this.user.password.length < 6) {
+      } else if (this.data.password.length < 6) {
         this.errors.password.push("A senha deve ter no mínimo 6 caracteres!");
       }
 
@@ -140,7 +143,7 @@ export default {
         this.errors.confirm_password.push("Campo obrigatório!");
       }
 
-      if (this.user.password && this.confirm_password && this.user.password !== this.confirm_password) {
+      if (this.data.password && this.confirm_password && this.data.password !== this.confirm_password) {
         this.errors.confirm_password.push("Este campo não coincide com a senha fornecida.");
       }
     },
@@ -157,7 +160,21 @@ export default {
     signup() {
       this.validateInput();
       if (this.noInputErrorsFound()) {
-        console.log("The form is properly validated");
+        // join user data with the api credentials to authenticate the request
+        this.data = { ...this.data, ...apiCredentials };
+
+        axios
+          .post("api/signup", this.data)
+          .then((res) => {
+            // store in the browser
+            console.log(res);
+          })
+          .catch((err) => {
+            let errors = err.response.data.errors;
+            if ({}.hasOwnProperty.call(errors, "email")) {
+              this.errors.email.push(...errors.email);
+            }
+          });
       }
     },
   },
