@@ -2,20 +2,23 @@
   <div>
     <div class="flex justify-center items-center min-h-screen bg-indigo-700 font-family-rubik">
       <div class="w-full md:w-2/5 mx-5 shadow-md rounded-sm bg-white p-5 md:flex md:flex-col md:justify-center">
-      <h1 class="font-family-dancing font-bold text-3xl mb-5">Logar para acessar suas consultas</h1>
+        <h1 class="font-family-dancing font-bold text-3xl mb-5">Logar para acessar suas consultas</h1>
         <form action="">
+          <div class="p-3 rounded mb-2 bg-red-200 text-red-900" v-show="error.credentials">
+            {{ error.credentials }}
+          </div>
           <div class="form-group">
             <label for="email">Email</label>
             <input
               type="email"
               class="input-normal"
-              v-model="user.email"
+              v-model="data.username"
               required
               placeholder="claudia.mirela@bobari.co.mz"
               id="email"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="errors.email.length > 0">
-              {{ errors.email[0] }}
+            <p class="text-red-700 text-sm font-semibold" v-show="error.email.length > 0">
+              {{ error.email[0] }}
             </p>
           </div>
 
@@ -24,12 +27,12 @@
             <input
               class="input-normal"
               required
-              v-model="user.password"
+              v-model="data.password"
               type="password"
               placeholder="***************"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="errors.password.length > 0">
-              {{ errors.password[0] }}
+            <p class="text-red-700 text-sm font-semibold" v-show="error.password.length > 0">
+              {{ error.password[0] }}
             </p>
           </div>
 
@@ -44,44 +47,60 @@
 </template>
 
 <script>
+import axios, { apiCredentials } from "@/axios";
+
 export default {
   data() {
     return {
-      errors: {
+      error: {
         email: [],
         password: [],
+        credentials: "",
       },
-      user: {},
+      data: {},
     };
   },
   methods: {
     validateInput() {
-      this.errors.email = [];
-      this.errors.password = [];
+      this.error.email = [];
+      this.error.password = [];
+      this.error.credentials = "";
 
       const matchEmail = /\S+@\S+\.\S+/;
 
-      if (!this.user.email) {
-        this.errors.email.push("Campo obrigatório!");
+      if (!this.data.username) {
+        this.error.email.push("Campo obrigatório!");
       } else {
-        if (!matchEmail.test(this.user.email)) {
-          this.errors.email.push("Formato de email inválido!");
+        if (!matchEmail.test(this.data.username)) {
+          this.error.email.push("Formato de email inválido!");
         }
       }
 
-      if (!this.user.password) {
-        this.errors.password.push("Campo obrigatório!");
-      } else if (this.user.password.length < 6) {
-        this.errors.password.push("A senha deve ter no mínimo 6 caracteres!");
+      if (!this.data.password) {
+        this.error.password.push("Campo obrigatório!");
+      } else if (this.data.password.length < 6) {
+        this.error.password.push("A senha deve ter no mínimo 6 caracteres!");
       }
     },
     noInputErrorsFound() {
-      if (this.errors.email.length === 0 && this.errors.password.length === 0) return true;
+      if (this.error.email.length === 0 && this.error.password.length === 0) return true;
     },
     login() {
       this.validateInput();
       if (this.noInputErrorsFound()) {
-        console.log("The form is properly validated");
+        // join user data with the api credentials to authenticate the request
+        this.data = { ...this.data, ...apiCredentials };
+
+        axios
+          .post("oauth/token", this.data)
+          .then((res) => {
+            // store token in the browser
+            console.log(res);
+          })
+          .catch((err) => {
+            this.error.credentials = "O email/senha fornecidos são inválidos!";
+            err.response;
+          });
       }
     },
   },
