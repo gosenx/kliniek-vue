@@ -161,10 +161,8 @@ export default {
       this.validateInput();
       if (this.noInputErrorsFound()) {
         // join user data with the api credentials to authenticate the request
-        this.data = { ...this.data, ...apiCredentials };
-
         axios
-          .post("api/signup", this.data)
+          .post("api/signup", { ...this.data, ...apiCredentials })
           .then((res) => {
             // store token in the browser
             console.log(res);
