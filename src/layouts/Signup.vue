@@ -168,10 +168,14 @@ export default {
             console.log(res);
           })
           .catch((err) => {
-            let errors = err.response.data.errors;
-            if ({}.hasOwnProperty.call(errors, "email")) {
-              this.error.email.push(...errors.email);
-            }
+            if (err.response) {
+              if (err.response.data) {
+                let errors = err.response.data.errors;
+                if ({}.hasOwnProperty.call(errors, "email")) {
+                  this.error.email.push(...errors.email);
+                }
+              } else throw new Error("Some unexpected error ocurred!");
+            } else throw new Error("Some unexpected error ocurred!");
           });
       }
     },
