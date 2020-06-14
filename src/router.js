@@ -15,8 +15,8 @@ const router = new VueRouter({
   routes: [
     { path: "/", component: Home, meta: { requiresAuth: false } },
     { path: "/example", component: Example, meta: { requiresAuth: true } },
-    { path: "/login", component: Login, meta: { requiresAuth: false } },
-    { path: "/signup", component: Signup, meta: { requiresAuth: false } },
+    { path: "/login", component: Login, meta: { hideIfAuth: true } },
+    { path: "/signup", component: Signup, meta: { hideIfAuth: true } },
     { path: "/dashboard", component: Dashboard, meta: { requiresAuth: true } },
   ],
 });
@@ -28,6 +28,8 @@ router.beforeEach((to, from, next) => {
       return;
     }
     next("/login");
+  } else if (to.matched.some((route) => route.meta.hideIfAuth)) {
+    next("/dashboard");
   } else {
     next();
   }
