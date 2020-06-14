@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios, { apiCredentials } from "./axios";
+import router from "./router";
 
 Vue.use(Vuex);
 
@@ -11,7 +12,7 @@ export const store = new Vuex.Store({
   },
   getters: {
     isLoggedIn: (state) => !!state.accessToken,
-    hasUserInfo: (state) => !!state.user,
+    hasUserInfo: (state) => (Object.keys(state.user).length !== 0 ? true : false),
   },
   mutations: {
     login(state, token) {
@@ -31,15 +32,30 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
-    login({ commit, dispatch }, user) {
+    login({ commit }, user) {
       return new Promise((resolve, reject) => {
         axios
           .post("oauth/token", { ...user, ...apiCredentials })
           .then((response) => {
             commit("login", response.data.access_token);
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access_token;
-            dispatch("getUser");
-            resolve(response);
+
+            router.push("/dashboard");
+            resolve("You are Logged in!");
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    signup({ dispatch }, user) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post("api/signup", { ...user, ...apiCredentials })
+          .then((res) => {
+            if (res.status && res.status == 200) {
+              dispatch("login", { username: user.email, password: user.password });
+            } else resolve(res);
           })
           .catch((err) => {
             reject(err);
@@ -50,10 +66,11 @@ export const store = new Vuex.Store({
       return axios
         .get("api/user")
         .then((resp) => {
-          console.log(resp.data.data);
           commit("setUser", { user: resp.data.data });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          throw new Error(err);
+        });
     },
   },
 });

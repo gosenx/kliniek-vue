@@ -1,10 +1,7 @@
 <template>
   <div>
     <div class="flex justify-center items-center min-h-screen bg-indigo-700 font-family-rubik">
-      <div
-        id="card"
-        class="mx-5 shadow-md rounded-sm bg-white p-5 md:flex md:flex-col md:justify-center"
-      >
+      <div id="card" class="mx-5 shadow-md rounded-sm bg-white p-5 md:flex md:flex-col md:justify-center">
         <h1 class="text-blue-800 font-medium leading-none text-3xl mb-5">Logue para acessar suas consultas</h1>
         <form action="">
           <div class="p-3 rounded mb-2 bg-red-200 text-red-900" v-show="error.credentials">
@@ -89,10 +86,11 @@ export default {
     login() {
       this.validateInput();
       if (this.noInputErrorsFound()) {
-        // join user data with the api credentials to authenticate the request
         this.$store.dispatch("login", this.data).catch((err) => {
-          this.error.credentials = "O email/senha fornecidos são inválidos!";
-          err.response;
+          if (err.response)
+            if (err.response.status == 400) this.error.credentials = "O email/senha fornecidos são inválidos!";
+            else this.error.credentials = "Verifique suas credenciais!";
+          else this.error.credentials = "Serviço offline! Contacte o administrador do site.";
         });
       }
     },

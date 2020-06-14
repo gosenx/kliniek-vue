@@ -21,9 +21,11 @@
               placeholder="Claudia Mirela Sandiru"
               id="fullname"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="error.fullname.length > 0">
-              {{ error.fullname[0] }}
-            </p>
+            <div v-show="error.fullname.length > 0">
+              <p class="text-red-700 text-sm font-semibold" v-for="fullname in error.fullname" :key="fullname">
+                {{ fullname }}
+              </p>
+            </div>
           </div>
 
           <div class="form-group">
@@ -36,9 +38,11 @@
               placeholder="claudia.mirela@bobari.co.mz"
               id="email"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="error.email.length > 0">
-              {{ error.email[0] }}
-            </p>
+            <div v-show="error.email.length > 0">
+              <p class="text-red-700 text-sm font-semibold" v-for="email in error.email" :key="email">
+                {{ email }}
+              </p>
+            </div>
           </div>
 
           <div class="form-group">
@@ -47,7 +51,11 @@
               <option value="male">Masculino</option>
               <option value="female">Femenino</option>
             </select>
-            <p class="text-red-700 text-sm font-semibold" v-show="error.gender.length > 0">{{ error.gender[0] }}</p>
+            <div v-show="error.gender.length > 0">
+              <p class="text-red-700 text-sm font-semibold" v-for="gender in error.gender" :key="gender">
+                {{ gender }}
+              </p>
+            </div>
           </div>
 
           <div class="form-group">
@@ -59,9 +67,11 @@
               type="password"
               placeholder="***************"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="error.password.length > 0">
-              {{ error.password[0] }}
-            </p>
+            <div v-show="error.password.length > 0">
+              <p class="text-red-700 text-sm font-semibold" v-for="password in error.password" :key="password">
+                {{ password }}
+              </p>
+            </div>
           </div>
 
           <div class="form-group">
@@ -73,9 +83,11 @@
               type="password"
               placeholder="***************"
             />
-            <p class="text-red-700 text-sm font-semibold" v-show="error.confirm_password.length > 0">
-              {{ error.confirm_password[0] }}
-            </p>
+            <div v-show="error.confirm_password.length > 0">
+              <p class="text-red-700 text-sm font-semibold" v-for="confirm in error.confirm_password" :key="confirm">
+                {{ confirm }}
+              </p>
+            </div>
           </div>
 
           <button class="btn-normal" @click.prevent="signup">Registar</button>
@@ -89,12 +101,11 @@
 </template>
 
 <script>
-import axios, { apiCredentials } from "@/axios";
-
 export default {
   data() {
     return {
       error: {
+        general: "",
         fullname: [],
         email: [],
         gender: [],
@@ -161,22 +172,16 @@ export default {
       this.validateInput();
       if (this.noInputErrorsFound()) {
         // join user data with the api credentials to authenticate the request
-        axios
-          .post("api/signup", { ...this.data, ...apiCredentials })
-          .then((res) => {
-            // store token in the browser
-            console.log(res);
-          })
-          .catch((err) => {
-            if (err.response) {
-              if (err.response.data) {
-                let errors = err.response.data.errors;
-                if ({}.hasOwnProperty.call(errors, "email")) {
-                  this.error.email.push(...errors.email);
-                }
-              } else throw new Error("Some unexpected error ocurred!");
-            } else throw new Error("Some unexpected error ocurred!");
-          });
+        this.$store.dispatch("signup", this.data).catch((err) => {
+          if (err.response && err.response.data) {
+            if (err.response.data.errors) {
+              this.error.email.push(...err.response.data.errors);
+            }
+          } else {
+            this.error.general = "Ocorreu algum erro inesperado durante o registo.";
+            throw new Error(err.response);
+          }
+        });
       }
     },
   },
