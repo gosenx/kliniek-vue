@@ -5,6 +5,7 @@ import Example from "./components/Example";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import NotFoundPage from "./pages/NotFoundPage";
 import { store } from "./store";
 
 Vue.use(VueRouter);
@@ -13,11 +14,12 @@ const router = new VueRouter({
   base: "/",
   mode: "history",
   routes: [
-    { path: "/", component: Home, meta: { requiresAuth: false } },
-    { path: "/example", component: Example, meta: { requiresAuth: true } },
+    { path: "/", component: Home },
+    { path: "/example", component: Example },
     { path: "/login", component: Login, meta: { hideIfAuth: true } },
     { path: "/signup", component: Signup, meta: { hideIfAuth: true } },
     { path: "/dashboard", component: Dashboard, meta: { requiresAuth: true } },
+    { path: "*", component: NotFoundPage },
   ],
 });
 
