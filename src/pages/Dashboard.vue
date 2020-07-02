@@ -2,12 +2,15 @@
   <div class="min-h-screen bg-gray-100">
     <dashboard-header></dashboard-header>
     <main class="mt-12 px-4 container mx-auto">
-      <div class="grid grid-cols-3 gap-10 row-gap-3">
+      <p class="text-gray-500 text-center text-3xl">Nenhuma consulta marcada ou em andamento.</p>
+      <div class="grid md:grid-cols-3 gap-10 row-gap-3">
         <appointment-component></appointment-component>
         <appointment-component></appointment-component>
         <appointment-component></appointment-component>
       </div>
-      <div class="mt-1">
+      <div class="mt-5">
+        <make-appointment></make-appointment>
+        <make-appointment></make-appointment>
         <make-appointment></make-appointment>
       </div>
     </main>

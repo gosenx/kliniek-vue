@@ -1,10 +1,15 @@
 <template>
   <div class="px-6 py-4 bg-gray-300">
     <div class="mb-2">
-      <p class="font-semibold text-2xl text-gray-700">Tipo de consulta</p>
+      <p class="font-semibold text-2xl text-gray-700">Que tipo de consulta deseja realizar?</p>
     </div>
-    <choose-specialty></choose-specialty>
-    Marcar consulta!
+    <div class="grid gap-4 grid-cols-3">
+      <choose-specialty></choose-specialty>
+      <choose-specialty></choose-specialty>
+      <choose-specialty></choose-specialty>
+      <choose-specialty></choose-specialty>
+      <choose-specialty></choose-specialty>
+    </div>
   </div>
 </template>
 <script>
