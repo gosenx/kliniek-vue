@@ -1,13 +1,13 @@
 <template>
   <div class="px-6 py-4 bg-gray-200">
     <div class="mb-2">
-      <h3 class="font-semibold text-2xl text-gray-700">Que tipo de consulta deseja realizar?</h3>
+      <h3 class="font-semibold text-2xl text-gray-700">Que tipo de especialista deseja consultar?</h3>
       <div class="flex justify-between mt-5 mb-2">
         <div class="w-48">
           <input type="text" placeholder="filtrar..." class="input-base" />
         </div>
         <div class="w-48">
-          <button class="btn-normal opacity-75 cursor-not-allowed" disabled>Seguinte</button>
+          <button class="btn-normal">Seguinte</button>
         </div>
       </div>
     </div>
@@ -16,13 +16,22 @@
       <choose-specialty></choose-specialty>
       <choose-specialty></choose-specialty>
     </div>
+    <div class="mt-10">
+      <doctor-component></doctor-component>
+    </div>
   </div>
 </template>
 <script>
 import ChooseSpecialty from "./ChooseSpecialty";
+import DoctorComponent from "./DoctorComponent";
+
 export default {
   components: {
     ChooseSpecialty,
+    DoctorComponent,
+  },
+  methods: {
+    next() {},
   },
 };
 </script>
