@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded border-2 border-indigo-700 shadow-md p-4 text-gray-900 mb-5">
+  <div class="bg-white rounded border-2 border-gray-400 p-4 text-gray-900 mb-5">
     <div class="flex justify-between text-xs">
       <p class="text-gray-600">22/07/2020 15:30</p>
       <p class="leading-none text-white text-xs px-2 py-1 bg-blue-600 rounded">andamento</p>

@@ -8,9 +8,7 @@
         <appointment-component></appointment-component>
         <appointment-component></appointment-component>
       </div>
-      <div class="mt-5">
-        <make-appointment></make-appointment>
-        <make-appointment></make-appointment>
+      <div class="my-5">
         <make-appointment></make-appointment>
       </div>
     </main>
