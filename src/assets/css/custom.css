@@ -40,16 +40,33 @@
 }
 
 .btn-normal-outline {
-  @apply w-full h-12 bg-gray-400 border-2 border-indigo-700 rounded px-3 py-2 text-lg font-medium;
+  @apply w-full h-10 border-2 border-indigo-700 rounded px-1 text-lg font-medium;
 }
+
 .btn-normal-outline:hover {
   @apply bg-indigo-700 text-white;
 }
 
 .btn-normal {
-  @apply w-full h-12 bg-indigo-700 rounded px-3 py-2 text-white text-lg font-medium;
+  @apply w-full h-10 bg-indigo-700 rounded px-1 text-white text-lg font-medium;
 }
 
 .btn-normal:hover {
   @apply bg-indigo-800;
+}
+
+.time-badge {
+  @apply text-center text-white px-2 py-1 w-16 shadow-md rounded-lg bg-gray-800 cursor-pointer;
+}
+
+.time-badge.active {
+  @apply bg-indigo-700;
+}
+
+.specialty-card {
+  @apply bg-white cursor-pointer rounded p-4 shadow-md;
+}
+
+.specialty-card.active{
+  @apply bg-green-600 text-white;
 }
