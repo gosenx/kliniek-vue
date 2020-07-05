@@ -1,6 +1,6 @@
 <template>
   <div class="px-6 py-4 bg-gray-200">
-    <div v-show="false">
+    <div v-show="true">
       <div class=" mb-6 md:flex justify-between items-center">
         <h2 class="text-2xl md:text-4xl mb-4 md:mb-0">Que tipo de consulta deseja realizar?</h2>
         <div>
@@ -15,9 +15,9 @@
     </div>
     <div v-show="false" class=" md:w-1/2">
       <h4 class="text-2xl md:text-4xl mb-2">Escolha a data da consulta</h4>
-      <input type="date" class="input-base" />
+      <input type="date" :min="getMinDate()" class="input-base" />
     </div>
-    <div v-show="true">
+    <div v-show="false">
       <h4 class="text-2xl md:text-4xl mb-2">Escolha a hora</h4>
       <div class="flex md:w-1/2 justify-between">
         <div class="time-badge">13:00</div>
@@ -38,13 +38,25 @@
 </template>
 <script>
 import Specialty from "./Specialty";
-
+import addDays from "@/utils/data";
 export default {
   components: {
     Specialty,
   },
+  data() {
+    return {};
+  },
   methods: {
     next() {},
+    getMinDate() {
+      let now = new Date();
+      if (now.getHours() + ":" + now.getMinutes() > "16:20") {
+        return addDays(1)
+          .toISOString()
+          .substring(0, 10);
+      }
+      return now.toISOString().substring(0, 10);
+    },
   },
 };
 </script>
