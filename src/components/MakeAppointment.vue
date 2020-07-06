@@ -8,9 +8,9 @@
         </div>
       </div>
       <div class="grid md:grid-cols-3 gap-4">
-        <specialty class="active"></specialty>
-        <specialty></specialty>
-        <specialty></specialty>
+        <specialty name="options" label="1" @change="changeValue" :value="specialty_id" class="active"></specialty>
+        <specialty name="options" label="2" @change="changeValue" :value="specialty_id"></specialty>
+        <specialty name="options" label="3" @change="changeValue" :value="specialty_id"></specialty>
       </div>
     </div>
     <div v-show="currentStage === 'date'" class=" md:w-1/2">
@@ -46,9 +46,13 @@ export default {
   data() {
     return {
       currentStage: "specialty", // specialty, date, time
+    specialty_id: "2",
     };
   },
   methods: {
+    changeValue(id) {
+      this.specialty_id = id;
+    },
     previous() {
       if (this.currentStage == "time") {
         this.currentStage = "date";
