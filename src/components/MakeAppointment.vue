@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="grid md:grid-cols-3 gap-4">
-        <specialty name="options" label="1" @change="changeValue" :value="specialty_id" class="active"></specialty>
+        <specialty name="options" label="1" @change="changeValue" :value="specialty_id"></specialty>
         <specialty name="options" label="2" @change="changeValue" :value="specialty_id"></specialty>
         <specialty name="options" label="3" @change="changeValue" :value="specialty_id"></specialty>
       </div>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       currentStage: "specialty", // specialty, date, time
-    specialty_id: "2",
+      specialty_id: "2",
     };
   },
   methods: {

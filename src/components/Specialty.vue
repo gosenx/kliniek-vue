@@ -1,5 +1,5 @@
 <template>
-  <div class="specialty-card relative">
+  <div class="specialty-card relative" :class="radioButtonValue == label ? 'active' : ''">
     <label :for="label" class="cursor-pointer">
       <h3 class="mb-1 text-lg font-semibold">Medicina interna</h3>
       <div class="text-sm">
