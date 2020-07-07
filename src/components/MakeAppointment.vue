@@ -15,7 +15,7 @@
     </div>
     <div v-show="currentStage === 'date'" class=" md:w-1/2">
       <h4 class="text-2xl md:text-3xl mb-2">Escolha a data da consulta</h4>
-      <input type="date" :min="getMinDate()" class="input-base" />
+      <input type="date" :min="getMinDate()" :max="getMaxDate()" class="input-base" />
     </div>
     <div v-show="currentStage === 'time'">
       <h4 class="text-2xl md:text-3xl mb-2">Escolha a hora</h4>
@@ -38,7 +38,7 @@
 </template>
 <script>
 import Specialty from "./Specialty";
-import addDays from "@/utils/data";
+import addDays from "@/utils/Date";
 export default {
   components: {
     Specialty,
@@ -75,6 +75,11 @@ export default {
           .substring(0, 10);
       }
       return now.toISOString().substring(0, 10);
+    },
+    getMaxDate() {
+      return addDays(30)
+        .toISOString()
+        .substring(0, 10);
     },
   },
 };

@@ -79,10 +79,6 @@
   @apply flex;
 }
 
-.btn-group > button:hover {
-  @apply bg-gray-500;
-}
-
 .btn-group > button {
   @apply w-full bg-gray-500 px-2 py-1;
 }
@@ -93,6 +89,10 @@
 
 .btn-group > button:last-child {
   @apply rounded-r;
+}
+
+.btn-group > button:hover {
+  @apply bg-gray-600;
 }
 
 .btn-group > button[disabled] {
