@@ -8,24 +8,24 @@
         </div>
       </div>
       <div class="grid md:grid-cols-3 gap-4">
-        <specialty name="options" label="1" @change="changeValue" :value="specialty_id"></specialty>
-        <specialty name="options" label="2" @change="changeValue" :value="specialty_id"></specialty>
-        <specialty name="options" label="3" @change="changeValue" :value="specialty_id"></specialty>
+        <specialty name="specialty" label="1" @change="toggleSpecialty" :value="input.specialty_id"></specialty>
+        <specialty name="specialty" label="2" @change="toggleSpecialty" :value="input.specialty_id"></specialty>
+        <specialty name="specialty" label="3" @change="toggleSpecialty" :value="input.specialty_id"></specialty>
       </div>
     </div>
     <div v-show="currentStage === 'date'" class=" md:w-1/2">
       <h4 class="text-2xl md:text-3xl mb-2">Escolha a data da consulta</h4>
-      <input type="date" :min="getMinDate()" :max="getMaxDate()" class="input-base" />
+      <input type="date" v-model="input.date" :min="getMinDate()" :max="getMaxDate()" class="input-base" />
     </div>
     <div v-show="currentStage === 'time'">
       <h4 class="text-2xl md:text-3xl mb-2">Escolha a hora</h4>
-      <div class="flex md:w-1/2 justify-between">
-        <div class="time-badge">13:00</div>
-        <div class="time-badge">13:40</div>
-        <div class="time-badge">14:20</div>
-        <div class="time-badge active">15:00</div>
-        <div class="time-badge">15:40</div>
-        <div class="time-badge">16:20</div>
+      <div class="flex flex-wrap mx-auto md:w-2/3 xl:w-2/4 justify-between">
+        <choose-time name="time" label="13:00" :value="input.time" @change="toggleTime"></choose-time>
+        <choose-time name="time" label="13:40" :value="input.time" @change="toggleTime"></choose-time>
+        <choose-time name="time" label="14:20" :value="input.time" @change="toggleTime"></choose-time>
+        <choose-time name="time" label="15:00" :value="input.time" @change="toggleTime"></choose-time>
+        <choose-time name="time" label="15:40" :value="input.time" @change="toggleTime"></choose-time>
+        <choose-time name="time" label="16:20" :value="input.time" @change="toggleTime"></choose-time>
       </div>
     </div>
     <div class="flex justify-end mt-10">
@@ -38,20 +38,32 @@
 </template>
 <script>
 import Specialty from "./Specialty";
+import ChooseTime from "./ChooseTimeComponent";
 import addDays from "@/utils/Date";
+
 export default {
   components: {
     Specialty,
+    ChooseTime,
   },
   data() {
     return {
       currentStage: "specialty", // specialty, date, time
-      specialty_id: "2",
+      input: {
+        specialty_id: "2",
+        date: addDays(1)
+          .toISOString()
+          .substring(0, 10),
+        time: "13:40",
+      },
     };
   },
   methods: {
-    changeValue(id) {
-      this.specialty_id = id;
+    toggleSpecialty(id) {
+      this.input.specialty_id = id;
+    },
+    toggleTime(time) {
+      this.input.time = time;
     },
     previous() {
       if (this.currentStage == "time") {
