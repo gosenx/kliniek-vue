@@ -98,3 +98,24 @@
 .btn-group > button[disabled] {
   @apply bg-gray-400 cursor-not-allowed;
 }
+
+.table-base {
+  @apply w-full bg-white border border-gray-400 table-auto;
+}
+
+.table-base > thead {
+  @apply bg-indigo-300;
+}
+
+.table-base > thead > tr {
+  @apply text-left;
+}
+
+.table-base > thead > tr > th,
+.table-base > tbody > tr > td {
+  @apply px-4 py-2;
+}
+
+.table-base > tbody > tr:hover {
+  @apply bg-indigo-100;
+}

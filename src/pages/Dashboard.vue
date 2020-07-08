@@ -1,20 +1,26 @@
 <template>
   <div>
     <patient-dashboard v-if="profile_type == 'patient'"></patient-dashboard>
-    <div v-else-if="profile_type == 'doctor'">Doctors</div>
-    <div v-else-if="profile_type == 'receptionist'">Receptionists</div>
-    <div v-else-if="profile_type == 'admin'">Admins</div>
-    <div v-else>Admins</div>
+    <doctor-dashboard v-else-if="profile_type == 'doctor'">Doctors</doctor-dashboard>
+    <receptionist-dashboard v-else-if="profile_type == 'receptionist'">Receptionists</receptionist-dashboard>
+    <admin-dashboard v-else-if="profile_type == 'admin'">Admins</admin-dashboard>
+    <div v-else>Super Admins</div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import AdminDashboard from "./admins/AdminDashboard";
+import DoctorDashboard from "./doctors/DoctorDashboard";
 import PatientDashboard from "./patients/PatientDashboard";
+import ReceptionistDashboard from "./receptionists/ReceptionistDashboard";
 
 export default {
   components: {
+    AdminDashboard,
+    DoctorDashboard,
     PatientDashboard,
+    ReceptionistDashboard,
   },
   computed: {
     ...mapGetters(["profile_type"]),
