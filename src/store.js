@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     accessToken: localStorage.getItem("token") || "",
-    user: {},
+    user: JSON.parse(localStorage.getItem("user")) || {},
   },
   getters: {
     isLoggedIn: (state) => !!state.accessToken,
@@ -25,10 +25,12 @@ export const store = new Vuex.Store({
     logout(state) {
       state.user = {};
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       delete axios.defaults.headers.common["Authorization"];
     },
     setUser(state, payload) {
       state.user = payload.user;
+      localStorage.setItem("user", JSON.stringify(payload.user));
     },
   },
   actions: {
