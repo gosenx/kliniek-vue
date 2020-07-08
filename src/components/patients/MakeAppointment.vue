@@ -20,12 +20,12 @@
     <div v-show="currentStage === 'time'">
       <h4 class="text-2xl md:text-3xl mb-2">Escolha a hora</h4>
       <div class="flex flex-wrap mx-auto md:w-2/3 xl:w-2/4 justify-between">
-        <choose-time name="time" label="13:00" :value="input.time" @change="toggleTime"></choose-time>
-        <choose-time name="time" label="13:40" :value="input.time" @change="toggleTime"></choose-time>
-        <choose-time name="time" label="14:20" :value="input.time" @change="toggleTime"></choose-time>
-        <choose-time name="time" label="15:00" :value="input.time" @change="toggleTime"></choose-time>
-        <choose-time name="time" label="15:40" :value="input.time" @change="toggleTime"></choose-time>
-        <choose-time name="time" label="16:20" :value="input.time" @change="toggleTime"></choose-time>
+        <time-badge name="time" label="13:00" :value="input.time" @change="toggleTime"></time-badge>
+        <time-badge name="time" label="13:40" :value="input.time" @change="toggleTime"></time-badge>
+        <time-badge name="time" label="14:20" :value="input.time" @change="toggleTime"></time-badge>
+        <time-badge name="time" label="15:00" :value="input.time" @change="toggleTime"></time-badge>
+        <time-badge name="time" label="15:40" :value="input.time" @change="toggleTime"></time-badge>
+        <time-badge name="time" label="16:20" :value="input.time" @change="toggleTime"></time-badge>
       </div>
     </div>
     <div class="flex justify-end mt-10">
@@ -37,14 +37,14 @@
   </div>
 </template>
 <script>
-import Specialty from "./Specialty";
-import ChooseTime from "./ChooseTimeComponent";
+import Specialty from "../SelectSpecialtyComponent";
+import TimeBadge from "../TimeBadgeComponent";
 import addDays from "@/utils/Date";
 
 export default {
   components: {
     Specialty,
-    ChooseTime,
+    TimeBadge,
   },
   data() {
     return {

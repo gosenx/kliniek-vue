@@ -1,5 +1,5 @@
 <template>
-  <div class="specialty-card relative" :class="radioButtonValue == label ? 'active' : ''">
+  <div class="specialty-card relative" :class="radio == label ? 'active' : ''">
     <label :for="label" class="cursor-pointer">
       <h3 class="mb-1 text-lg font-semibold">Medicina interna</h3>
       <div class="text-sm">
@@ -10,7 +10,7 @@
         :id="label"
         :name="name"
         :value="label"
-        v-model="radioButtonValue"
+        v-model="radio"
         class="absolute right-0 top-0 mt-2 mr-2"
         type="radio"
       />
@@ -18,18 +18,9 @@
   </div>
 </template>
 <script>
+import radioButtonMixin from "@/mixins/RadioButton";
+
 export default {
-  props: ["name", "label", "value"],
-  computed: {
-    radioButtonValue: {
-      get: function() {
-        return this.value;
-      },
-      set: function() {
-        // Communicate the change to parent component so that selectedValue can be updated
-        this.$emit("change", this.label);
-      },
-    },
-  },
+  mixins: [radioButtonMixin],
 };
 </script>
