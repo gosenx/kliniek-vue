@@ -39,9 +39,10 @@ export const store = new Vuex.Store({
           .then((response) => {
             commit("login", response.data.access_token);
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access_token;
-
-            router.push("/dashboard");
-            resolve("You are Logged in!");
+            this.dispatch("getUser").then(() => {
+              router.push("/dashboard");
+              resolve("You are Logged in!");
+            });
           })
           .catch((err) => {
             reject(err);

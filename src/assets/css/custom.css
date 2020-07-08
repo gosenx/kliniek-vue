@@ -26,18 +26,75 @@
   @apply text-lg font-medium text-indigo-900;
 }
 
+.input-base {
+  @apply w-full rounded h-12 text-lg text-blue-900 py-2 px-3 leading-tight bg-white border-2 border-gray-500;
+}
+
 .input-normal {
   @apply w-full rounded h-12 text-lg text-blue-900 py-2 px-3 leading-tight bg-gray-300;
 }
+
 .input-normal:hover,
 .input-normal:focus {
   @apply border-2 border-indigo-700;
 }
 
+.btn-normal-outline {
+  @apply w-full h-10 border-2 border-indigo-700 rounded px-1 text-lg font-medium;
+}
+
+.btn-normal-outline:hover {
+  @apply bg-indigo-700 text-white;
+}
+
 .btn-normal {
-  @apply w-full h-12 bg-indigo-700 rounded px-3 py-2 text-white text-lg font-medium;
+  @apply w-full h-10 bg-indigo-700 rounded px-1 text-white text-lg font-medium;
 }
 
 .btn-normal:hover {
   @apply bg-indigo-800;
+}
+
+.time-badge {
+  @apply text-center text-white px-2 py-1 w-16 shadow-md rounded-lg bg-gray-800 cursor-pointer;
+}
+
+.time-badge.active {
+  @apply bg-indigo-700;
+}
+
+.specialty-card {
+  @apply bg-white border-2 border-transparent rounded p-4 shadow-md;
+}
+
+.specialty-card:hover {
+  @apply bg-gray-100 border-2 border-green-700;
+}
+
+.specialty-card.active {
+  @apply bg-green-600 text-white;
+}
+
+.btn-group {
+  @apply flex;
+}
+
+.btn-group > button {
+  @apply w-full bg-gray-500 px-2 py-1;
+}
+
+.btn-group > button:first-child {
+  @apply rounded-l;
+}
+
+.btn-group > button:last-child {
+  @apply rounded-r;
+}
+
+.btn-group > button:hover {
+  @apply bg-gray-600;
+}
+
+.btn-group > button[disabled] {
+  @apply bg-gray-400 cursor-not-allowed;
 }

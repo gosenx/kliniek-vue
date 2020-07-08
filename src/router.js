@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
       return;
     }
     next("/login");
-  } else if (to.matched.some((route) => route.meta.hideIfAuth)) {
+  } else if (to.matched.some((route) => route.meta.hideIfAuth && store.getters.isLoggedIn)) {
     next("/dashboard");
   } else {
     next();

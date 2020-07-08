@@ -1,9 +1,10 @@
 import axios from "axios";
 
+// Future me: Don't do this in production. Instead create a small backend to manage the credentials.
 export let apiCredentials = {
   grant_type: "password",
-  client_id: 4,
-  client_secret: "HhorKAj21iNiTq9zEaFrkLGkCpfrMhhp0MiocBS4",
+  client_id: 1,
+  client_secret: "5RyDPuFt1Q1EueEcFIPe5jwUftCCtHquL9CQEGjK",
 };
 
 const http = axios.create({
