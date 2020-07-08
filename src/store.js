@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
   getters: {
     isLoggedIn: (state) => !!state.accessToken,
     hasUserInfo: (state) => (Object.keys(state.user).length !== 0 ? true : false),
+    profile_type: (state) => state.user.profile_type,
   },
   mutations: {
     login(state, token) {
