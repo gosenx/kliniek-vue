@@ -3,8 +3,11 @@
     <dashboard-header></dashboard-header>
     <main class="mt-12 px-4 container mx-auto">
       <list-appointments></list-appointments>
-      <div class="my-5">
-        <table class="table-base">
+      <div class="mt-5">
+        <div class="w-64 mb-2">
+          <input type="text" placeholder="filtrar..." class="input-base" />
+        </div>
+        <table class="table-base table-auto">
           <thead>
             <tr>
               <th>Nr.</th>
