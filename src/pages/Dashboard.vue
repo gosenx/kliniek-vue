@@ -10,6 +10,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+
 import AdminDashboard from "./admins/AdminDashboard";
 import DoctorDashboard from "./doctors/DoctorDashboard";
 import PatientDashboard from "./patients/PatientDashboard";
@@ -24,6 +25,9 @@ export default {
   },
   computed: {
     ...mapGetters(["profile_type"]),
+  },
+  created() {
+    this.$store.commit("setHeader");
   },
 };
 </script>

@@ -12,7 +12,6 @@ export const store = new Vuex.Store({
   },
   getters: {
     isLoggedIn: (state) => !!state.accessToken,
-    hasUserInfo: (state) => (Object.keys(state.user).length !== 0 ? true : false),
     profile_type: (state) => state.user.profile_type,
   },
   mutations: {
@@ -32,6 +31,9 @@ export const store = new Vuex.Store({
     setUser(state, payload) {
       state.user = payload.user;
       localStorage.setItem("user", JSON.stringify(payload.user));
+    },
+    setHeader(state) {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + state.accessToken;
     },
   },
   actions: {
