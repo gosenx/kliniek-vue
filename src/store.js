@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+
 import axios, { apiCredentials } from "./axios";
 import router from "./router";
 
@@ -10,32 +11,39 @@ export const store = new Vuex.Store({
     accessToken: localStorage.getItem("token") || "",
     user: JSON.parse(localStorage.getItem("user")) || {},
   },
+
   getters: {
     isLoggedIn: (state) => !!state.accessToken,
     profile_type: (state) => state.user.profile_type,
   },
+
   mutations: {
     login(state, token) {
       state.accessToken = token;
       localStorage.setItem("token", token);
     },
+
     signup(state) {
       console.state(state.user);
     },
+
     logout(state) {
       state.user = {};
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       delete axios.defaults.headers.common["Authorization"];
     },
+
     setUser(state, payload) {
       state.user = payload.user;
       localStorage.setItem("user", JSON.stringify(payload.user));
     },
-    setHeader(state) {
+
+    setAuthHeader(state) {
       axios.defaults.headers.common["Authorization"] = "Bearer " + state.accessToken;
     },
   },
+
   actions: {
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
@@ -43,8 +51,9 @@ export const store = new Vuex.Store({
           .post("oauth/token", { ...user, ...apiCredentials })
           .then((response) => {
             commit("login", response.data.access_token);
-            axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.access_token;
-            this.dispatch("getUser").then(() => {
+            commit("setAuthHeader");
+
+            this.dispatch("fetchUser").then(() => {
               router.push("/dashboard");
               resolve("You are Logged in!");
             });
@@ -54,6 +63,7 @@ export const store = new Vuex.Store({
           });
       });
     },
+
     signup({ dispatch }, user) {
       return new Promise((resolve, reject) => {
         axios
@@ -68,7 +78,8 @@ export const store = new Vuex.Store({
           });
       });
     },
-    getUser({ commit }) {
+
+    fetchUser({ commit }) {
       return axios
         .get("api/user")
         .then((resp) => {

@@ -27,7 +27,7 @@ export default {
     ...mapGetters(["profile_type"]),
   },
   created() {
-    this.$store.commit("setHeader");
+    this.$store.commit("setAuthHeader");
   },
 };
 </script>
