@@ -47,7 +47,7 @@ export default {
   mixins: [clickaway],
   data() {
     return {
-      dropdownActive: true,
+      dropdownActive: false,
     };
   },
   methods: {
@@ -64,6 +64,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 #profile {
   width: 30px;
