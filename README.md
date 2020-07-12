@@ -6,8 +6,8 @@ Make appointments online!
 
 - [x] Show corresponding dashboard on login
 - [ ] Make appointment
-- [ ] See scheduled appointments
-- [ ] See appointments details
+- [x] See scheduled appointments
+- [x] See appointments details
 - [ ] Add contacts
 - [ ] Edit profile details
 
