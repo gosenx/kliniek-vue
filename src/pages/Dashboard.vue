@@ -4,7 +4,7 @@
     <doctor-dashboard v-else-if="profile_type == 'doctor'">Doctors</doctor-dashboard>
     <receptionist-dashboard v-else-if="profile_type == 'receptionist'">Receptionists</receptionist-dashboard>
     <admin-dashboard v-else-if="profile_type == 'admin'">Admins</admin-dashboard>
-    <div v-else>Super Admins</div>
+    <div v-else-if="profile_type == 'super_admin'">Super Admins</div>
   </div>
 </template>
 

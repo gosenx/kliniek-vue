@@ -29,9 +29,7 @@ export const store = new Vuex.Store({
 
     logout(state) {
       state.user = {};
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      delete axios.defaults.headers.common["Authorization"];
+      state.accessToken = null;
     },
 
     setUser(state, payload) {
@@ -88,6 +86,17 @@ export const store = new Vuex.Store({
         .catch((err) => {
           throw new Error(err);
         });
+    },
+
+    logout({ commit }) {
+      return new Promise((resolve) => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        delete axios.defaults.headers.common["Authorization"];
+        
+        commit("logout");
+        resolve("logout");
+      });
     },
   },
 });
