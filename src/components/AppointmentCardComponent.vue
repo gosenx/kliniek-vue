@@ -9,16 +9,34 @@
 
     <div class="flex justify-between text-sm mt-1">
       <p class="">Dr. {{ appointment.doctor.fullname }}</p>
-      <a :href="'appointments/' + appointment.id" class="underline text-indigo-700 hover:text-indigo-800">Detalhes</a>
+      <button @click="toggleModal" class="underline text-indigo-700 hover:text-indigo-800">Detalhes</button>
     </div>
+    <modal :appointment="appointment" v-if="isModalOpen" @close="toggleModal"></modal>
   </div>
 </template>
 <script>
+import Modal from "@/components/AppointmentModal";
+
 export default {
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+      isModalOpen: false,
+    };
+  },
   props: {
     appointment: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    toggleModal() {
+      if (this.isModalOpen) {
+        this.isModalOpen = false;
+      } else this.isModalOpen = true;
     },
   },
 };
