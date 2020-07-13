@@ -10,5 +10,6 @@ import radioButtonMixin from "@/mixins/RadioButton";
 
 export default {
   mixins: [radioButtonMixin],
+  props: ["label"],
 };
 </script>

@@ -1,13 +1,10 @@
 <template>
   <div class="specialty-card relative" :class="radio == label ? 'active' : ''">
-    <label :for="label" class="cursor-pointer">
-      <h3 class="mb-1 text-lg font-semibold">Medicina interna</h3>
-      <div class="text-sm">
-        O especialista desta area avalia o doente adulto no seu todo, relacionando a complexidade do corpo humano e
-        interagindo com os vários problemas que o podem afetar.
-      </div>
+    <label :for="specialty.slug" class="cursor-pointer">
+      <h3 class="mb-1 text-lg font-semibold">{{ specialty.name }}</h3>
+      <div class="text-sm">{{ specialty.description }}</div>
       <input
-        :id="label"
+        :id="specialty.slug"
         :name="name"
         :value="label"
         v-model="radio"
@@ -22,5 +19,25 @@ import radioButtonMixin from "@/mixins/RadioButton";
 
 export default {
   mixins: [radioButtonMixin],
+
+  props: {
+    specialty: {
+      type: Object,
+      default: () => {
+        return {
+          id: 1,
+          name: "Medicina Interna",
+          slug: "medicina-interna-",
+          description: "O especialista desta area avalia o doente adulto no seu todo.",
+        };
+      },
+    },
+  },
+
+  data() {
+    return {
+      label: this.specialty.id,
+    };
+  },
 };
 </script>

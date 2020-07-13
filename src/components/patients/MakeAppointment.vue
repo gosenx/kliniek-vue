@@ -8,9 +8,14 @@
         </div>
       </div>
       <div class="grid md:grid-cols-3 gap-4">
-        <specialty name="specialty" label="1" @change="toggleSpecialty" :value="input.specialty_id"></specialty>
-        <specialty name="specialty" label="2" @change="toggleSpecialty" :value="input.specialty_id"></specialty>
-        <specialty name="specialty" label="3" @change="toggleSpecialty" :value="input.specialty_id"></specialty>
+        <specialty
+          name="specialty"
+          @change="toggleSpecialty"
+          v-for="specialty in specialties"
+          :key="specialty.id"
+          :specialty="specialty"
+          :value="input.specialty_id"
+        ></specialty>
       </div>
     </div>
     <div v-show="currentStage === 'date'" class=" md:w-1/2">
@@ -41,30 +46,48 @@ import Specialty from "../SelectSpecialtyComponent";
 import TimeBadge from "../TimeBadgeComponent";
 import addDays from "@/utils/Date";
 
+import axios from "@/axios";
+
 export default {
   components: {
     Specialty,
     TimeBadge,
   },
+  created() {
+    this.retrieveSpecialties();
+  },
   data() {
     return {
       currentStage: "specialty", // specialty, date, time
       input: {
-        specialty_id: "2",
+        specialty_id: 1,
         date: addDays(1)
           .toISOString()
           .substring(0, 10),
         time: "13:40",
       },
+      specialties: [],
     };
   },
+
   methods: {
+    retrieveSpecialties() {
+      axios
+        .get("api/specialties")
+        .then((res) => {
+          this.specialties = res.data.data;
+        })
+        .catch((err) => console.log(err));
+    },
+    
     toggleSpecialty(id) {
       this.input.specialty_id = id;
     },
+
     toggleTime(time) {
       this.input.time = time;
     },
+
     previous() {
       if (this.currentStage == "time") {
         this.currentStage = "date";
@@ -72,6 +95,7 @@ export default {
         this.currentStage = "specialty";
       }
     },
+
     next() {
       if (this.currentStage == "specialty") {
         this.currentStage = "date";
@@ -79,6 +103,7 @@ export default {
         this.currentStage = "time";
       }
     },
+
     getMinDate() {
       let now = new Date();
       if (now.getHours() + ":" + now.getMinutes() > "16:20") {
@@ -88,6 +113,7 @@ export default {
       }
       return now.toISOString().substring(0, 10);
     },
+
     getMaxDate() {
       return addDays(30)
         .toISOString()

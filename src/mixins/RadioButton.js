@@ -1,5 +1,5 @@
 const radio = {
-  props: ["name", "label", "value"],
+  props: ["name", 'value'],
   computed: {
     radio: {
       get: function() {
