@@ -4,14 +4,14 @@
       <div class=" mb-6 md:flex justify-between items-center">
         <h2 class="text-2xl md:text-3xl mb-4 md:mb-0">Que tipo de consulta deseja realizar?</h2>
         <div>
-          <input type="text" placeholder="filtrar..." class="input-base" />
+          <input type="text" placeholder="filtrar..." v-model="search" @keyup="filterSpecialties" class="input-base" />
         </div>
       </div>
       <div class="grid md:grid-cols-3 gap-4">
         <specialty
           name="specialty"
           @change="toggleSpecialty"
-          v-for="specialty in specialties"
+          v-for="specialty in filteredSpecialties"
           :key="specialty.id"
           :specialty="specialty"
           :value="input.specialty_id"
@@ -69,6 +69,8 @@ export default {
         time: "13:40",
       },
       specialties: [],
+      filteredSpecialties: this.specialties,
+      search: "",
     };
   },
 
@@ -79,12 +81,25 @@ export default {
           .get("api/specialties")
           .then((res) => {
             this.specialties = res.data.data;
+            this.filteredSpecialties = this.specialties;
             this.$store.commit("setSpecialties", res.data.data);
           })
           .catch((err) => console.log(err));
       } else {
         this.specialties = this.$store.state.specialties;
+        this.filteredSpecialties = this.specialties;
       }
+    },
+
+    filterSpecialties() {
+      this.filteredSpecialties = this.specialties.filter((specialty) => {
+        if (this.search) {
+          return (
+            specialty.name.toLowerCase().includes(this.search.toLowerCase()) ||
+            specialty.description.toLowerCase().includes(this.search.toLowerCase())
+          );
+        } else return true;
+      });
     },
 
     toggleSpecialty(id) {
