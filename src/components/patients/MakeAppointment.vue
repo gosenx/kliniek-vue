@@ -53,9 +53,11 @@ export default {
     Specialty,
     TimeBadge,
   },
+
   created() {
     this.retrieveSpecialties();
   },
+
   data() {
     return {
       currentStage: "specialty", // specialty, date, time
@@ -72,14 +74,19 @@ export default {
 
   methods: {
     retrieveSpecialties() {
-      axios
-        .get("api/specialties")
-        .then((res) => {
-          this.specialties = res.data.data;
-        })
-        .catch((err) => console.log(err));
+      if (this.$store.state.specialties.length == 0) {
+        axios
+          .get("api/specialties")
+          .then((res) => {
+            this.specialties = res.data.data;
+            this.$store.commit("setSpecialties", res.data.data);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        this.specialties = this.$store.state.specialties;
+      }
     },
-    
+
     toggleSpecialty(id) {
       this.input.specialty_id = id;
     },

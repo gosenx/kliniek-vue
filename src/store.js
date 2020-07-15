@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
   state: {
     accessToken: localStorage.getItem("token") || "",
     user: JSON.parse(localStorage.getItem("user")) || {},
+    specialties: [],
   },
 
   getters: {
@@ -39,6 +40,10 @@ export const store = new Vuex.Store({
 
     setAuthHeader(state) {
       axios.defaults.headers.common["Authorization"] = "Bearer " + state.accessToken;
+    },
+
+    setSpecialties(state, specialties) {
+      state.specialties = specialties;
     },
   },
 
@@ -93,7 +98,7 @@ export const store = new Vuex.Store({
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         delete axios.defaults.headers.common["Authorization"];
-        
+
         commit("logout");
         resolve("logout");
       });
