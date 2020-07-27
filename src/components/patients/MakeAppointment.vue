@@ -25,12 +25,14 @@
     <div v-show="currentStage === 'time'">
       <h4 class="text-2xl md:text-3xl mb-2">Escolha a hora</h4>
       <div class="flex flex-wrap mx-auto md:w-2/3 xl:w-2/4 justify-between">
-        <time-badge name="time" label="13:00" :value="input.time" @change="toggleTime"></time-badge>
-        <time-badge name="time" label="13:40" :value="input.time" @change="toggleTime"></time-badge>
-        <time-badge name="time" label="14:20" :value="input.time" @change="toggleTime"></time-badge>
-        <time-badge name="time" label="15:00" :value="input.time" @change="toggleTime"></time-badge>
-        <time-badge name="time" label="15:40" :value="input.time" @change="toggleTime"></time-badge>
-        <time-badge name="time" label="16:20" :value="input.time" @change="toggleTime"></time-badge>
+        <time-badge
+          name="time"
+          v-for="time in hours"
+          :key="time"
+          :label="time"
+          :value="input.time"
+          @change="toggleTime"
+        ></time-badge>
       </div>
     </div>
     <div class="flex justify-end mt-10">
@@ -63,11 +65,11 @@ export default {
       currentStage: "specialty", // specialty, date, time
       input: {
         specialty_id: 1,
-        date: addDays(1)
-          .toISOString()
-          .substring(0, 10),
-        time: "13:40",
+        doctor_code: null,
+        date: this.getMinDate(),
+        time: "",
       },
+      hours: [],
       specialties: [],
       filteredSpecialties: this.specialties,
       search: "",
@@ -84,7 +86,7 @@ export default {
             this.filteredSpecialties = this.specialties;
             this.$store.commit("setSpecialties", res.data.data);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {throw new Error(err)});
       } else {
         this.specialties = this.$store.state.specialties;
         this.filteredSpecialties = this.specialties;
@@ -122,8 +124,19 @@ export default {
       if (this.currentStage == "specialty") {
         this.currentStage = "date";
       } else if (this.currentStage == "date") {
+        this.getAvailableDoctorAndHisFreeHours();
         this.currentStage = "time";
       }
+    },
+
+    getAvailableDoctorAndHisFreeHours() {
+      axios
+        .get("/api/specialties/" + this.input.specialty_id + "/doctors?date=" + this.input.date + "&random=true")
+        .then((res) => {
+          this.hours = res.data.hours;
+          this.input.doctor_code = res.data.certification_code;
+        })
+        .catch((err) => {throw new Error(err)});
     },
 
     getMinDate() {
