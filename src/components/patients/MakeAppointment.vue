@@ -64,10 +64,10 @@ export default {
     return {
       currentStage: "specialty", // specialty, date, time
       input: {
-        specialty_id: 1,
+        specialty_id: 4,
         doctor_code: null,
         date: this.getMinDate(),
-        time: "",
+        time: "14:20",
       },
       hours: [],
       specialties: [],
@@ -86,7 +86,9 @@ export default {
             this.filteredSpecialties = this.specialties;
             this.$store.commit("setSpecialties", res.data.data);
           })
-          .catch((err) => {throw new Error(err)});
+          .catch((err) => {
+            throw new Error(err);
+          });
       } else {
         this.specialties = this.$store.state.specialties;
         this.filteredSpecialties = this.specialties;
@@ -136,7 +138,9 @@ export default {
           this.hours = res.data.hours;
           this.input.doctor_code = res.data.certification_code;
         })
-        .catch((err) => {throw new Error(err)});
+        .catch((err) => {
+          throw new Error(err);
+        });
     },
 
     getMinDate() {
