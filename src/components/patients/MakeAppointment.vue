@@ -1,5 +1,5 @@
 <template>
-  <div class="px-6 py-4 bg-gray-200">
+  <div id="makeAppointment" class="flex flex-col justify-between px-6 py-4 bg-gray-200">
     <div v-show="currentStage === 'specialty'">
       <div class=" mb-6 md:flex justify-between items-center">
         <h2 class="text-2xl md:text-3xl mb-4 md:mb-0">Que tipo de consulta deseja realizar?</h2>
@@ -14,17 +14,31 @@
           v-for="specialty in filteredSpecialties"
           :key="specialty.id"
           :specialty="specialty"
-          :value="input.specialty_id"
+          :value="specialty_id"
         ></specialty>
       </div>
     </div>
-    <div v-show="currentStage === 'date'" class=" md:w-1/2">
-      <h4 class="text-2xl md:text-3xl mb-2">Escolha a data da consulta</h4>
-      <input type="date" v-model="input.date" :min="getMinDate()" :max="getMaxDate()" class="input-base" />
+    <div v-show="currentStage === 'details'" class=" md:w-1/2">
+      <h4 class="text-2xl md:text-3xl mb-2">Informe mais detalhes sobre a consulta</h4>
+      <div class="form-group">
+        <label for="date">Em que dia deseja realizar a consulta?</label>
+        <input id="date" type="date" v-model="input.date" :min="getMinDate()" :max="getMaxDate()" class="input-base" />
+      </div>
+      <div>
+        <label for="description">Forneça detalhes sobre seu estado de saúde...</label>
+        <textarea
+          id="description"
+          v-model="input.description"
+          cols="30"
+          rows="5"
+          class="mt-2 text-area-base"
+          placeholder="ex: Tenho registado dores de cabeça frequentes..."
+        ></textarea>
+      </div>
     </div>
     <div v-show="currentStage === 'time'">
       <h4 class="text-2xl md:text-3xl mb-2">Escolha a hora</h4>
-      <div class="flex flex-wrap mx-auto md:w-2/3 xl:w-2/4 justify-between">
+      <div v-if="hours.length > 0" class="flex flex-wrap mx-auto md:w-2/3 xl:w-2/4 justify-between">
         <time-badge
           name="time"
           v-for="time in hours"
@@ -34,11 +48,16 @@
           @change="toggleTime"
         ></time-badge>
       </div>
+      <div class="text-xl px-2 bg-red-300 inline-block" v-else>
+        {{
+          input.date == null ? "A data é inválida! Verifique o passo anterior." : "Nenhuma hora disponpivel nessa data."
+        }}
+      </div>
     </div>
     <div class="flex justify-end mt-10">
       <div class="w-48 btn-group">
         <button :disabled="currentStage === 'specialty'" @click="previous()">Anterior</button>
-        <button :disabled="currentStage === 'time'" @click="next()">Próximo</button>
+        <button :disabled="currentStage === 'time' && input.time == null" @click="next()">Próximo</button>
       </div>
     </div>
   </div>
@@ -62,15 +81,17 @@ export default {
 
   data() {
     return {
-      currentStage: "specialty", // specialty, date, time
+      currentStage: "specialty", // specialty, details, time
       input: {
-        specialty_id: 4,
         doctor_code: null,
-        date: this.getMinDate(),
-        time: "14:20",
+        patient_code: this.$store.state.user.patient_code,
+        date: null,
+        description: "",
+        time: null,
       },
       hours: [],
       specialties: [],
+      specialty_id: 4,
       filteredSpecialties: this.specialties,
       search: "",
     };
@@ -107,7 +128,7 @@ export default {
     },
 
     toggleSpecialty(id) {
-      this.input.specialty_id = id;
+      this.specialty_id = id;
     },
 
     toggleTime(time) {
@@ -116,16 +137,16 @@ export default {
 
     previous() {
       if (this.currentStage == "time") {
-        this.currentStage = "date";
-      } else if (this.currentStage == "date") {
+        this.currentStage = "details";
+      } else if (this.currentStage == "details") {
         this.currentStage = "specialty";
       }
     },
 
     next() {
       if (this.currentStage == "specialty") {
-        this.currentStage = "date";
-      } else if (this.currentStage == "date") {
+        this.currentStage = "details";
+      } else if (this.currentStage == "details") {
         this.getAvailableDoctorAndHisFreeHours();
         this.currentStage = "time";
       }
@@ -133,12 +154,13 @@ export default {
 
     getAvailableDoctorAndHisFreeHours() {
       axios
-        .get("/api/specialties/" + this.input.specialty_id + "/doctors?date=" + this.input.date + "&random=true")
+        .get("/api/specialties/" + this.specialty_id + "/doctors?date=" + this.input.date + "&random=true")
         .then((res) => {
           this.hours = res.data.hours;
           this.input.doctor_code = res.data.certification_code;
         })
         .catch((err) => {
+          this.hours = [];
           throw new Error(err);
         });
     },
@@ -161,3 +183,9 @@ export default {
   },
 };
 </script>
+
+<style>
+#makeAppointment {
+  min-height: 250px;
+}
+</style>

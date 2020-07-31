@@ -39,6 +39,10 @@
   @apply border-2 border-indigo-700;
 }
 
+.text-area-base {
+  @apply w-full rounded text-lg text-blue-900 py-2 px-3 leading-tight bg-white border-2 border-gray-500;
+}
+
 .btn-normal-outline {
   @apply w-full h-10 border-2 border-indigo-700 rounded px-1 text-lg font-medium;
 }
