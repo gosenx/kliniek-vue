@@ -4,11 +4,14 @@
       <p class="text-gray-600">{{ appointment.date }} {{ appointment.time }}</p>
       <p class="leading-none text-white text-xs px-2 py-1 bg-blue-600 rounded">{{ appointment.state }}</p>
     </div>
-    <p class="text-2xl font-semibold">{{ appointment.patient.fullname }}</p>
+    <p class="text-2xl font-semibold">
+      <span v-if="profile == 'patient'">{{ "Dr(a). " + appointment.doctor.fullname }}</span>
+      <span v-else>{{ appointment.patient.fullname }}</span>
+    </p>
     <p class="text-lg leading-tight text-gray-700">{{ appointment.description }}</p>
 
     <div class="flex justify-between text-sm mt-1">
-      <p class="">Dr. {{ appointment.doctor.fullname }}</p>
+      <p class="">{{ profile == "patient" ? "" : "Dr(a)." + appointment.doctor.fullname }}</p>
       <button @click="toggleModal" class="underline text-indigo-700 hover:text-indigo-800">Detalhes</button>
     </div>
     <modal :appointment="appointment" v-if="isModalOpen" @close="toggleModal"></modal>
@@ -24,6 +27,7 @@ export default {
   data() {
     return {
       isModalOpen: false,
+      profile: this.$store.getters.profile_type,
     };
   },
   props: {

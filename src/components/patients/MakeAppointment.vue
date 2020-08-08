@@ -23,6 +23,7 @@
       <div class="form-group">
         <label for="date">Em que dia deseja realizar a consulta?</label>
         <input id="date" type="date" v-model="input.date" :min="getMinDate()" :max="getMaxDate()" class="input-base" />
+        <p v-if="errors.invalidDate" class="text-sm font-semibold text-red-700">{{ errors.invalidDate }}</p>
       </div>
       <div>
         <label for="description">Forneça detalhes sobre seu estado de saúde...</label>
@@ -91,6 +92,9 @@ export default {
       },
       hours: [],
       specialties: [],
+      errors: {
+        invalidDate: "",
+      },
       specialty_id: 4,
       filteredSpecialties: this.specialties,
       search: "",
@@ -127,6 +131,22 @@ export default {
       });
     },
 
+    makeAppointment() {
+      axios
+        .post("/api/patients/" + this.input.patient_code + "/appointments", this.input)
+        .then(() => {
+          this.input.doctor_code = null;
+          this.input.date = null;
+          this.input.time = null;
+          this.input.description = null;
+          this.currentStage = "specialty";
+        })
+        .catch((err) => {
+          console.log(err.error);
+          throw new Error(err);
+        });
+    },
+
     toggleSpecialty(id) {
       this.specialty_id = id;
     },
@@ -147,8 +167,14 @@ export default {
       if (this.currentStage == "specialty") {
         this.currentStage = "details";
       } else if (this.currentStage == "details") {
-        this.getAvailableDoctorAndHisFreeHours();
-        this.currentStage = "time";
+        if (this.input.date) {
+          this.getAvailableDoctorAndHisFreeHours();
+          this.currentStage = "time";
+        } else {
+          this.errors.invalidDate = "Preencha o campo de data.";
+        }
+      } else if (this.currentStage == "time") {
+        this.makeAppointment();
       }
     },
 
