@@ -35,6 +35,9 @@
           class="mt-2 text-area-base"
           placeholder="ex: Tenho registado dores de cabeça frequentes..."
         ></textarea>
+        <p v-if="errors.invalidDescription" class="text-sm font-semibold text-red-700">
+          {{ errors.invalidDescription }}
+        </p>
       </div>
     </div>
     <div v-show="currentStage === 'time'">
@@ -94,6 +97,7 @@ export default {
       specialties: [],
       errors: {
         invalidDate: "",
+        invalidDescription: "",
       },
       specialty_id: 4,
       filteredSpecialties: this.specialties,
@@ -167,11 +171,17 @@ export default {
       if (this.currentStage == "specialty") {
         this.currentStage = "details";
       } else if (this.currentStage == "details") {
-        if (this.input.date) {
+        if (!this.input.date || !this.input.description) {
+          if (!this.input.date) {
+            this.errors.invalidDate = "Preencha o campo de data.";
+          } else this.errors.invalidDate = null;
+
+          if (!this.input.description) {
+            this.errors.invalidDescription = "Preencha o campo de descrição.";
+          } else this.errors.invalidDescription = null;
+        } else {
           this.getAvailableDoctorAndHisFreeHours();
           this.currentStage = "time";
-        } else {
-          this.errors.invalidDate = "Preencha o campo de data.";
         }
       } else if (this.currentStage == "time") {
         this.makeAppointment();
