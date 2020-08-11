@@ -123,3 +123,16 @@
 .table-base > tbody > tr:hover {
   @apply bg-indigo-100;
 }
+
+/* Navigation */
+.navigation-link {
+  @apply mr-2 px-2 py-1 bg-gray-400;
+}
+
+.navigation-link:hover {
+  @apply bg-gray-500;
+}
+
+.navigation-link.active {
+  @apply text-white bg-gray-800;
+}

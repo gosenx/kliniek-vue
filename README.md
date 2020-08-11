@@ -5,7 +5,7 @@ Make appointments online!
 ## TODO Patient
 
 - [x] Show corresponding dashboard on login
-- [ ] Make appointment
+- [X] Make appointment
 - [x] See scheduled appointments
 - [x] See appointments details
 - [ ] Add contacts
