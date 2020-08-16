@@ -20,7 +20,12 @@
         </div>
 
         <div v-if="page === 'medicos'">
-          Médicos
+          <div v-if="doctors.length == 0">
+            Sem médicos a mostrar...
+          </div>
+          <div v-else class="grid grid-cols-4 gap-2">
+            <doctor-card v-for="doctor in doctors" :key="doctor.certification_code" :doctor="doctor"></doctor-card>
+          </div>
         </div>
 
         <div v-if="page === 'pacientes'">
@@ -37,18 +42,22 @@ import axios from "@/axios";
 
 import DashboardHeader from "@/components/dashboard/DashboardHeader.vue";
 import ListAppointments from "@/components/ListAppointmentsComponent.vue";
+import DoctorCard from "@/components/DoctorCardComponent.vue";
 
 export default {
   components: {
     ListAppointments,
     DashboardHeader,
+    DoctorCard,
   },
   created() {
     this.retriveAppointments();
+    this.retriveDoctors();
   },
   data() {
     return {
       appointments: [],
+      doctors: [],
       page: "consultas",
     };
   },
@@ -58,6 +67,14 @@ export default {
         .get(`api/appointments`)
         .then((res) => {
           this.appointments = res.data;
+        })
+        .catch((err) => console.log(err));
+    },
+    retriveDoctors() {
+      axios
+        .get(`api/doctors`)
+        .then((res) => {
+          this.doctors = res.data;
         })
         .catch((err) => console.log(err));
     },
