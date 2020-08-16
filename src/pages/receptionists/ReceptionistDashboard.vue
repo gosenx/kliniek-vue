@@ -23,13 +23,18 @@
           <div v-if="doctors.length == 0">
             Sem médicos a mostrar...
           </div>
-          <div v-else class="grid grid-cols-4 gap-2">
+          <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-2">
             <doctor-card v-for="doctor in doctors" :key="doctor.certification_code" :doctor="doctor"></doctor-card>
           </div>
         </div>
 
         <div v-if="page === 'pacientes'">
-          Pacientes
+          <div v-if="patients.length == 0">
+            Sem pacientes a mostrar...
+          </div>
+          <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <patient-card v-for="patient in patients" :key="patient.id" :patient="patient"></patient-card>
+          </div>
         </div>
       </div>
     </main>
@@ -43,21 +48,25 @@ import axios from "@/axios";
 import DashboardHeader from "@/components/dashboard/DashboardHeader.vue";
 import ListAppointments from "@/components/ListAppointmentsComponent.vue";
 import DoctorCard from "@/components/DoctorCardComponent.vue";
+import PatientCard from "@/components/PatientCardComponent.vue";
 
 export default {
   components: {
     ListAppointments,
     DashboardHeader,
     DoctorCard,
+    PatientCard,
   },
   created() {
     this.retriveAppointments();
     this.retriveDoctors();
+    this.retrivePatients();
   },
   data() {
     return {
       appointments: [],
       doctors: [],
+      patients: [],
       page: "consultas",
     };
   },
@@ -75,6 +84,14 @@ export default {
         .get(`api/doctors`)
         .then((res) => {
           this.doctors = res.data;
+        })
+        .catch((err) => console.log(err));
+    },
+    retrivePatients() {
+      axios
+        .get(`api/patients`)
+        .then((res) => {
+          this.patients = res.data.data;
         })
         .catch((err) => console.log(err));
     },
