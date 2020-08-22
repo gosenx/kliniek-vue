@@ -5,7 +5,7 @@ Make appointments online!
 ## TODO Patient
 
 - [x] Show corresponding dashboard on login
-- [X] Make appointment
+- [x] Make appointment
 - [x] See scheduled appointments
 - [x] See appointments details
 - [ ] Add contacts
@@ -25,8 +25,8 @@ Make appointments online!
 - [ ] Edit appointment details
 - [ ] Create new patients
 - [ ] Edit patients details
-- [ ] List patients
-- [ ] List doctors
+- [x] List patients
+- [x] List doctors
 - [ ] See doctors availability
 - [ ] See and filter appointments by state and date
 - [ ] Edit profile details
