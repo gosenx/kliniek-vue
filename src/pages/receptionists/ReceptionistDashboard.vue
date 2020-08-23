@@ -6,10 +6,10 @@
         <a class="navigation-link" :class="page == 'consultas' ? 'active' : ''" @click="page = 'consultas'" href="#"
           >Consultas</a
         >
-        <a class="navigation-link" :class="page == 'medicos' ? 'active' : ''" @click="page = 'medicos'" href="#"
+        <a class="navigation-link" :class="page == 'medicos' ? 'active' : ''" @click="showDoctors()" href="#"
           >Médicos</a
         >
-        <a class="navigation-link" :class="page == 'pacientes' ? 'active' : ''" @click="page = 'pacientes'" href="#"
+        <a class="navigation-link" :class="page == 'pacientes' ? 'active' : ''" @click="showPatients()" href="#"
           >Pacientes</a
         >
       </nav>
@@ -59,8 +59,6 @@ export default {
   },
   created() {
     this.retriveAppointments();
-    this.retriveDoctors();
-    this.retrivePatients();
   },
   data() {
     return {
@@ -71,6 +69,15 @@ export default {
     };
   },
   methods: {
+    showDoctors() {
+      this.page = "medicos";
+      this.retriveDoctors();
+    },
+    showPatients() {
+      this.page = "pacientes";
+      this.retrivePatients();
+    },
+
     retriveAppointments() {
       axios
         .get(`api/appointments`)
@@ -79,21 +86,27 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+
     retriveDoctors() {
-      axios
-        .get(`api/doctors`)
-        .then((res) => {
-          this.doctors = res.data;
-        })
-        .catch((err) => console.log(err));
+      if (this.doctors.length == 0) {
+        axios
+          .get(`api/doctors`)
+          .then((res) => {
+            this.doctors = res.data;
+          })
+          .catch((err) => console.log(err));
+      }
     },
+
     retrivePatients() {
-      axios
-        .get(`api/patients`)
-        .then((res) => {
-          this.patients = res.data.data;
-        })
-        .catch((err) => console.log(err));
+      if (this.patients.length == 0) {
+        axios
+          .get(`api/patients`)
+          .then((res) => {
+            this.patients = res.data.data;
+          })
+          .catch((err) => console.log(err));
+      }
     },
   },
 };
