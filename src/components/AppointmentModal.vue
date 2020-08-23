@@ -12,7 +12,7 @@
             <p>{{ appointment.patient_weight }}kg</p>
           </div>
           <div>
-            <h2 class="font-semibold">Dr. Marcos Fonseca</h2>
+            <h2 class="font-semibold">Dr(a). {{ appointment.doctor.fullname }}</h2>
             <p>{{ appointment.date }} {{ appointment.time }}</p>
           </div>
         </div>

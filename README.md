@@ -9,6 +9,7 @@ Make appointments online!
 - [x] See scheduled appointments
 - [x] See appointments details
 - [x] Add contacts
+- [ ] Change password
 - [ ] Edit profile details
 
 ## TODO Doctor

@@ -25,14 +25,22 @@
     <!-- History down -->
     <div v-if="page == 'historico'" class="container mx-auto">
       <div class="md:w-3/5">
-        <div class="">
-          <p class="text-gray-700 bg-gray-300 px-2 py-1 border-b border-gray-400">
-            No dia <span class="text-gray-800">22/02/2019</span> pelas
-            <span class="text-gray-800">14:10</span> consultou o
-            <span class="text-">otorrinolarringologista</span>
-            <b> Fernando Dias Lopes</b>.
+        <div v-if="completedAppointments.length > 0">
+          <p
+            v-for="appoint in completedAppointments"
+            :key="appoint.id"
+            class="text-gray-700 bg-gray-300 px-2 py-1 border-b border-gray-400"
+          >
+            No dia <span class="text-gray-800">{{ appoint.date }}</span> pelas
+            <span class="text-gray-800">{{ appoint.time }}</span> consultou o/a especialista em
+            <span>{{ appoint.doctor.specialty.name }}</span>
+            <b> dr(a). {{ appoint.doctor.fullname }}</b
+            >.
             <a href="#" class="text-blue-700 underline">Detalhes</a>
           </p>
+        </div>
+        <div v-else>
+          <h3 class="text-2xl text-gray-600">Você ainda não possuí nenhuma consulta terminada.</h3>
         </div>
       </div>
     </div>
@@ -153,7 +161,7 @@ export default {
         contactErrors: [],
         contactSuccess: undefined,
       },
-      pastAppointments: [],
+      completedAppointments: [],
     };
   },
 
@@ -161,12 +169,17 @@ export default {
     retriveAppointments() {
       axios
         .get(`api/patients/${this.user.patient_code}/appointments`)
-        .then((res) => (this.appointments = res.data))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          this.appointments = res.data;
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
     },
 
     showHistory() {
       this.page = "historico";
+      this.retrieveCompletedAppointments();
     },
 
     showProfile() {
@@ -180,6 +193,19 @@ export default {
           .get(`api/patients/${this.user.patient_code}/contacts`)
           .then((res) => {
             this.allContacts = res.data.data;
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+      }
+    },
+
+    retrieveCompletedAppointments() {
+      if (this.completedAppointments.length == 0) {
+        axios
+          .get(`api/patients/${this.user.patient_code}/appointments?state=completed`)
+          .then((res) => {
+            this.completedAppointments = res.data;
           })
           .catch((err) => {
             throw new Error(err);

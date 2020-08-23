@@ -14,17 +14,23 @@
 
     <div class="flex justify-between text-sm mt-1">
       <p class="">{{ profile == "patient" ? "" : "Dr(a). " + appointment.doctor.fullname }}</p>
-      <button @click="toggleModal" class="underline text-indigo-700 hover:text-indigo-800">Detalhes</button>
+      <div v-if="user.profile_type !== 'patient'">
+        <button @click="toggleModal" class="underline text-indigo-700 hover:text-indigo-800">Detalhes</button>
+      </div>
     </div>
     <modal :appointment="appointment" v-if="isModalOpen" @close="toggleModal"></modal>
   </div>
 </template>
 <script>
 import Modal from "@/components/AppointmentModal";
+import { mapState } from "vuex";
 
 export default {
   components: {
     Modal,
+  },
+  computed: {
+    ...mapState(["user"]),
   },
   data() {
     return {
