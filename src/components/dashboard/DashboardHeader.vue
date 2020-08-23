@@ -17,18 +17,6 @@
           v-on-clickaway="away"
         ></li>
         <nav v-show="dropdownActive" class="w-56 flex flex-col absolute top-0 right-0 mt-10 bg-white shadow border">
-          <a href="#">
-            <span>Outra opção</span>
-            <img src="@/assets/svg/users.svg" alt="Logout" />
-          </a>
-          <a href="#">
-            <span>Algo a mais</span>
-            <img src="@/assets/svg/users.svg" alt="Logout" />
-          </a>
-          <a href="#">
-            <span>Perfil</span>
-            <img src="@/assets/svg/user.svg" alt="Logout" />
-          </a>
           <a href="#" @click="logout">
             <span class="text-red-500">Logout</span>
             <img src="@/assets/svg/log-out.svg" alt="Logout" />

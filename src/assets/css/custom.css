@@ -59,6 +59,14 @@
   @apply bg-indigo-800;
 }
 
+.btn-secondary {
+  @apply w-full h-10 bg-gray-400 rounded px-1 text-lg font-medium;
+}
+
+.btn-secondary:hover {
+  @apply bg-gray-600;
+}
+
 .time-badge {
   @apply text-center text-white px-2 py-1 w-16 shadow-md rounded-lg bg-gray-800 cursor-pointer;
 }
