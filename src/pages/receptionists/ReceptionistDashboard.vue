@@ -23,7 +23,7 @@
           <div v-if="doctors.length == 0">
             Sem médicos a mostrar...
           </div>
-          <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div v-else class="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
             <doctor-card v-for="doctor in doctors" :key="doctor.certification_code" :doctor="doctor"></doctor-card>
           </div>
         </div>
@@ -32,7 +32,7 @@
           <div v-if="patients.length == 0">
             Sem pacientes a mostrar...
           </div>
-          <div v-else class="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div v-else class="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
             <patient-card v-for="patient in patients" :key="patient.id" :patient="patient"></patient-card>
           </div>
         </div>
