@@ -8,7 +8,7 @@
         <a class="navigation-link" :class="page == 'historico' ? 'active' : ''" @click="showHistory" href="#">
           Histórico
         </a>
-        <a class="navigation-link" :class="page == 'perfil' ? 'active' : ''" @click="page = 'perfil'" href="#">
+        <a class="navigation-link" :class="page == 'perfil' ? 'active' : ''" @click="showProfile" href="#">
           Perfil
         </a>
       </nav>
@@ -47,28 +47,31 @@
           <hr />
 
           <div class="mt-4">
-            <table class="w-full table-auto">
+            <table v-if="allContacts.length > 0" class="w-full table-auto">
               <tbody>
-                <tr>
-                  <td>845673452</td>
-                  <td><a href="#" class="text-red-700">Remover</a></td>
-                </tr>
-                <tr>
-                  <td>845673452</td>
-                  <td><a href="#" class="text-red-700">Remover</a></td>
-                </tr>
-                <tr>
-                  <td>845673452</td>
-                  <td><a href="#" class="text-red-700">Remover</a></td>
+                <tr v-for="phone in allContacts" :key="phone.id">
+                  <td>{{ phone.phone_number }}</td>
+                  <td>{{ phone.type }}</td>
+                  <td><a href="#" @click="deleteContact(phone.id)" class="text-red-700">Remover</a></td>
                 </tr>
               </tbody>
             </table>
+            <div v-else>
+              <h3 class="text-2xl text-gray-600">Você ainda não adicionou nenhum contacto.</h3>
+            </div>
           </div>
 
           <form action="" class="mt-4">
+            <div v-if="profileBag.contactErrors.length > 0">
+              <p class="text-red-700">{{ profileBag.contactErrors[0] }}</p>
+            </div>
+            <div v-if="profileBag.contactSuccess">
+              <p class="text-green-600">{{ profileBag.contactSuccess }}</p>
+            </div>
+
             <div class="form-group">
               <label for="contact">Tipo</label>
-              <select class="input-normal" name="contact">
+              <select v-model="contact.type" class="input-normal" name="contact">
                 <option value="primary">Primário</option>
                 <option value="secondary" selected>Secundário</option>
               </select>
@@ -76,11 +79,19 @@
 
             <div class="form-group">
               <label for="contact">Contacto</label>
-              <input class="input-normal" required type="number" min="820111111" placeholder="849388793" id="contat" />
+              <input
+                class="input-normal"
+                v-model="contact.phone_number"
+                required
+                type="number"
+                min="820111111"
+                placeholder="849388793"
+                id="contat"
+              />
             </div>
 
             <div class="w-32">
-              <button class="btn-secondary">Adicionar</button>
+              <button class="btn-secondary" @click.prevent="createNewContact()">Adicionar</button>
             </div>
           </form>
         </div>
@@ -136,9 +147,16 @@ export default {
     return {
       appointments: [],
       page: "home",
+      contact: {},
+      allContacts: [],
+      profileBag: {
+        contactErrors: [],
+        contactSuccess: undefined,
+      },
       pastAppointments: [],
     };
   },
+
   methods: {
     retriveAppointments() {
       axios
@@ -146,8 +164,51 @@ export default {
         .then((res) => (this.appointments = res.data))
         .catch((err) => console.log(err));
     },
+
     showHistory() {
       this.page = "historico";
+    },
+
+    showProfile() {
+      this.page = "perfil";
+      this.retrieveContacts();
+    },
+
+    retrieveContacts() {
+      if (this.allContacts.length == 0) {
+        axios
+          .get(`api/patients/${this.user.patient_code}/contacts`)
+          .then((res) => {
+            this.allContacts = res.data.data;
+          })
+          .catch((err) => {
+            throw new Error(err);
+          });
+      }
+    },
+
+    createNewContact() {
+      axios
+        .post(`api/patients/${this.user.patient_code}/contacts`, this.contact)
+        .then((res) => {
+          this.allContacts.push(res.data.data);
+          this.profileBag.contactErrors = [];
+          this.profileBag.contactSuccess = "Contacto adicionado com sucesso.";
+        })
+        .catch((err) => {
+          this.profileBag.contactErrors.push("O número deve conter 9 caracteres.");
+          this.profileBag.contactSuccess = undefined;
+          throw new Error(err);
+        });
+    },
+
+    deleteContact(id) {
+      axios
+        .delete(`api/patients/${this.user.patient_code}/contacts/${id}`)
+        .then(() => {
+          this.allContacts = this.allContacts.filter((item) => item.id !== id);
+        })
+        .catch((err) => console.log({ err }));
     },
   },
 };
