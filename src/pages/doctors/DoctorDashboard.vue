@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-100">
     <dashboard-header></dashboard-header>
     <main class="mt-12 px-4 container mx-auto">
-      <list-appointments></list-appointments>
+      <list-appointments :appointments="appointments"></list-appointments>
       <div class="mt-5">
         <div class="w-64 mb-2">
           <input type="text" placeholder="filtrar..." class="input-base" />
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import axios from "@/axios";
+
 import DashboardHeader from "@/components/dashboard/DashboardHeader.vue";
 import ListAppointments from "@/components/ListAppointmentsComponent.vue";
 
@@ -54,6 +56,28 @@ export default {
   components: {
     ListAppointments,
     DashboardHeader,
+  },
+
+  created() {
+    this.retriveAppointments();
+  },
+
+  data() {
+    return {
+      appointments: [],
+    };
+  },
+  methods: {
+    retriveAppointments() {
+      axios
+        .get(`api/doctors/${this.$store.state.user.certification_code}/appointments`)
+        .then((res) => {
+          this.appointments = res.data;
+        })
+        .catch((err) => {
+          throw new Error(err);
+        });
+    },
   },
 };
 </script>
