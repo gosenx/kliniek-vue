@@ -1,6 +1,8 @@
 <template>
   <div class="min-h-screen bg-gray-100">
     <dashboard-header></dashboard-header>
+    <div class="container mx-auto mt-2 flex justify-end">Secretária {{ this.$store.state.user.fullname }}</div>
+
     <main class="mt-12 px-4 container mx-auto">
       <nav class="flex mb-4">
         <a class="navigation-link" :class="page == 'consultas' ? 'active' : ''" @click="page = 'consultas'" href="#"

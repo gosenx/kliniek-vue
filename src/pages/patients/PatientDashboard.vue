@@ -1,6 +1,7 @@
 <template>
   <main class="min-h-screen bg-gray-100">
     <dashboard-header></dashboard-header>
+    <div class="container mx-auto mt-2 flex justify-end">Bem vindo! {{ this.$store.state.user.fullname }}</div>
 
     <div class="container mt-10 mb-4 mx-auto">
       <nav class="flex mb-4">
