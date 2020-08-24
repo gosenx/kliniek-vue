@@ -145,6 +145,7 @@ export default {
     DashboardHeader,
     MakeAppointment,
   },
+  
   computed: {
     ...mapState(["user"]),
   },
@@ -168,7 +169,7 @@ export default {
   methods: {
     retriveAppointments() {
       axios
-        .get(`api/patients/${this.user.patient_code}/appointments`)
+        .get(`api/patients/${this.user.patient_code}/appointments?state=scheduled`)
         .then((res) => {
           this.appointments = res.data;
         })

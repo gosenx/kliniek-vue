@@ -57,9 +57,11 @@ export default {
     DoctorCard,
     PatientCard,
   },
+
   created() {
     this.retriveAppointments();
   },
+
   data() {
     return {
       appointments: [],
@@ -68,6 +70,7 @@ export default {
       page: "consultas",
     };
   },
+
   methods: {
     showDoctors() {
       this.page = "medicos";
@@ -80,7 +83,7 @@ export default {
 
     retriveAppointments() {
       axios
-        .get(`api/appointments`)
+        .get(`api/appointments?state=scheduled`)
         .then((res) => {
           this.appointments = res.data;
         })

@@ -15,19 +15,34 @@
     <div class="flex justify-between text-sm mt-1">
       <p class="">{{ profile == "patient" ? "" : "Dr(a). " + appointment.doctor.fullname }}</p>
       <div v-if="user.profile_type !== 'patient'">
-        <button @click="toggleModal" class="underline text-indigo-700 hover:text-indigo-800">Detalhes</button>
+        <div v-if="user.profile_type === 'doctor' && appointment.state !== 'complete'">
+          <button @click="togglePrescriptionModal" class="underline text-indigo-700 hover:text-indigo-800">
+            Prescrever
+          </button>
+        </div>
+        <div v-else>
+          <button @click="toggleModal" class="underline text-indigo-700 hover:text-indigo-800">Detalhes</button>
+        </div>
+        <div></div>
       </div>
     </div>
     <modal :appointment="appointment" v-if="isModalOpen" @close="toggleModal"></modal>
+    <prescribe-appointment-modal
+      :appointment="appointment"
+      v-if="isPrescriptionModalOpen"
+      @close="togglePrescriptionModal"
+    ></prescribe-appointment-modal>
   </div>
 </template>
 <script>
 import Modal from "@/components/AppointmentModal";
+import PrescribeAppointmentModal from "@/components/PrescribeAppointmentModal";
 import { mapState } from "vuex";
 
 export default {
   components: {
     Modal,
+    PrescribeAppointmentModal,
   },
   computed: {
     ...mapState(["user"]),
@@ -35,6 +50,7 @@ export default {
   data() {
     return {
       isModalOpen: false,
+      isPrescriptionModalOpen: false,
       profile: this.$store.getters.profile_type,
     };
   },
@@ -49,6 +65,12 @@ export default {
       if (this.isModalOpen) {
         this.isModalOpen = false;
       } else this.isModalOpen = true;
+    },
+
+    togglePrescriptionModal() {
+      if (this.isPrescriptionModalOpen) {
+        this.isPrescriptionModalOpen = false;
+      } else this.isPrescriptionModalOpen = true;
     },
   },
 };
