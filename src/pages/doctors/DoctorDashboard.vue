@@ -1,6 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-100">
     <dashboard-header></dashboard-header>
+    <div class="container mx-auto mt-2 flex justify-end">Doutor(a) {{ this.$store.state.user.fullname }}</div>
     <main class="mt-12 px-4 container mx-auto">
       <list-appointments :appointments="appointments"></list-appointments>
       <div class="mt-5" v-if="completedAppointments.length > 0">

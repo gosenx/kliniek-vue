@@ -4,7 +4,7 @@ import axios from "axios";
 export let apiCredentials = {
   grant_type: "password",
   client_id: 2,
-  client_secret: "266BQf2VKse2ij5v92hyxyoi6wDMoBtNkp2t1Rrb",
+  client_secret: "GwBULCcaHZ1pJNNoe9aCOQFXgPNbsgg6f0m6x2Bx",
 };
 
 const http = axios.create({

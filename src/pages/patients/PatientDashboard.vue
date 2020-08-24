@@ -145,7 +145,7 @@ export default {
     DashboardHeader,
     MakeAppointment,
   },
-  
+
   computed: {
     ...mapState(["user"]),
   },
@@ -204,7 +204,7 @@ export default {
     retrieveCompletedAppointments() {
       if (this.completedAppointments.length == 0) {
         axios
-          .get(`api/patients/${this.user.patient_code}/appointments?state=completed`)
+          .get(`api/patients/${this.user.patient_code}/appointments?state=complete`)
           .then((res) => {
             this.completedAppointments = res.data;
           })

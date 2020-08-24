@@ -146,7 +146,8 @@ export default {
           this.currentStage = "specialty";
         })
         .catch((err) => {
-          console.log(err.error);
+          console.log(this.input);
+          console.log({ err });
           throw new Error(err);
         });
     },
