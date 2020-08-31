@@ -1,40 +1,21 @@
 # kliniek-vue
 
-Make appointments online!
+Schedule clinical appointments online.
 
-## TODO Patient
+> This is the web app was built on top of the [kliniek api](https://github.com/gosenx/kliniek-api).
 
-- [x] Show corresponding dashboard on login
-- [x] Make appointment
-- [x] See scheduled appointments
-- [x] See appointments details
-- [x] Add contacts
-- [ ] Change password
-- [ ] Edit profile details
+## Tools and libraries
 
-## TODO Doctor
+- Vuejs
+- Vue-router
+- Vuex
+- Tailwindcss
+- Axios
 
-- [x] Show corresponding dashboard on login
-- [ ] Filter appointments
-- [ ] See appointments details
-- [ ] Edit profile details
+## The experience
 
-## TODO Receptionist
+It was in so many ways good to develop this project. In the last commits you can see that i was rushing but that was to put stuff out.
 
-- [x] Show correspondig dashboard on login
-- [ ] Create new appointment
-- [ ] Edit appointment details
-- [ ] Create new patients
-- [ ] Edit patients details
-- [x] List patients
-- [x] List doctors
-- [ ] See doctors availability
-- [ ] See and filter appointments by state and date
-- [ ] Edit profile details
+This is not the best code i wrote in my life, but i'm pretty proud because i learned a lot about Vuejs and my next projects will benefit from the knowledge i gained building this app.
 
-## TODO Admin
-
-- [ ] Do all listed above
-- [ ] Create new receptionist
-- [ ] Disable receptionists
-- [ ] See the stats
+Enjoy!
