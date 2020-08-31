@@ -15,9 +15,7 @@
     <div class="flex justify-between text-sm mt-1">
       <p class="">{{ profile == "patient" ? "" : "Dr(a). " + appointment.doctor.fullname }}</p>
       <div v-if="user.profile_type !== 'patient'">
-        <div
-          v-if="user.profile_type === 'doctor' && appointment.state !== 'complete' && appointment.date === currentDay"
-        >
+        <div v-if="user.profile_type === 'doctor' && appointment.date <= currentDay">
           <button @click="togglePrescriptionModal" class="underline text-indigo-700 hover:text-indigo-800">
             Prescrever
           </button>
@@ -54,7 +52,7 @@ export default {
       isModalOpen: false,
       isPrescriptionModalOpen: false,
       profile: this.$store.getters.profile_type,
-      currentDay: new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),
+      currentDay: new Date().getFullYear() + "-0" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),
     };
   },
   props: {

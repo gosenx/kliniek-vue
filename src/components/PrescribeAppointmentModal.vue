@@ -38,7 +38,7 @@
                 <textarea v-model="data.notes" id="notes" class="input-normal" rows="10"></textarea>
               </div>
               <div class="w-32">
-                <button @click="prescribeAppointment()" class="btn-normal">Prescrever</button>
+                <button @click.prevent="prescribeAppointment()" class="btn-normal">Prescrever</button>
               </div>
             </form>
           </div>

@@ -4,6 +4,27 @@
     <div class="container mx-auto mt-2 flex justify-end">Secretária {{ this.$store.state.user.fullname }}</div>
 
     <main class="mt-12 px-4 container mx-auto">
+      <div class="grid grid-cols-6 gap-2 mb-10">
+        <div class="shadow bg-green-700 text-white p-4">
+          <h3>Consultas agendadas</h3>
+          <p class="text-2xl">{{ stats.appointments.scheduled }}</p>
+        </div>
+
+        <div class="shadow bg-blue-700 text-white p-4">
+          <h3>Médicos</h3>
+          <p class="text-2xl">{{ stats.doctors }}</p>
+        </div>
+
+        <div class="shadow bg-indigo-700 text-white p-4">
+          <h3>Pacientes</h3>
+          <p class="text-2xl">{{ stats.patients }}</p>
+        </div>
+
+        <div class="shadow bg-red-700 text-white p-4">
+          <h3>Consultas terminadas</h3>
+          <p class="text-2xl">{{ stats.appointments.complete }}</p>
+        </div>
+      </div>
       <nav class="flex mb-4">
         <a class="navigation-link" :class="page == 'consultas' ? 'active' : ''" @click="page = 'consultas'" href="#"
           >Consultas</a
@@ -63,6 +84,10 @@ export default {
   created() {
     this.retriveAppointments();
   },
+  mounted(){
+    this.retriveStats();
+
+  },
 
   data() {
     return {
@@ -70,6 +95,7 @@ export default {
       doctors: [],
       patients: [],
       page: "consultas",
+      stats: [],
     };
   },
 
@@ -109,6 +135,17 @@ export default {
           .get(`api/patients`)
           .then((res) => {
             this.patients = res.data.data;
+          })
+          .catch((err) => console.log(err));
+      }
+    },
+
+    retriveStats() {
+      if (this.patients.length == 0) {
+        axios
+          .get(`api/stats`)
+          .then((res) => {
+            this.stats = res.data;
           })
           .catch((err) => console.log(err));
       }
