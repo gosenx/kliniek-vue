@@ -18,7 +18,7 @@ Some of the UIs i built for this project. All the design issues are on me and th
 
 - Doctor prescribing an appointment
 
-![Doctor prescribing an appointment](Screenshots/Doctor-prescribing.png)
+![Doctor prescribing an appointment](Screenshots/Doctor-Prescribing.png)
 
 - Patient's home page
 
