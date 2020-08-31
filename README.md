@@ -14,8 +14,10 @@ Schedule clinical appointments online.
 
 ## The experience
 
-It was in so many ways good to develop this project. In the last commits you can see that i was rushing but that was to put stuff out.
+It was in so many ways good to design and develop this project. In the last commits you can see that i was rushing but that was to put stuff out.
 
-This is not the best code i wrote in my life, but i'm pretty proud because i learned a lot about Vuejs and my next projects will benefit from the knowledge i gained building this app.
+This is not the best code i wrote in my life, but i'm pretty proud because i learned a lot about Vuejs and practiced some design concepts i was learning. My next projects will benefit from the knowledge i gained building this app.
+
+> Check some screenshots [here](Screenshots.md).
 
 Enjoy!
