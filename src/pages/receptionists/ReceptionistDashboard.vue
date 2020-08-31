@@ -4,7 +4,7 @@
     <div class="container mx-auto mt-2 flex justify-end">Secretária {{ this.$store.state.user.fullname }}</div>
 
     <main class="mt-12 px-4 container mx-auto">
-      <div class="grid grid-cols-6 gap-2 mb-10">
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-2 mb-10">
         <div class="shadow bg-green-700 text-white p-4">
           <h3>Consultas agendadas</h3>
           <p class="text-2xl">{{ stats.appointments.scheduled }}</p>

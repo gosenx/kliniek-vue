@@ -37,12 +37,18 @@
             <span>{{ appoint.doctor.specialty.name }}</span>
             <b> dr(a). {{ appoint.doctor.fullname }}</b
             >.
-            <a href="#" class="text-blue-700 underline">Detalhes</a>
+            <a href="#" @click.prevent="toggleDetailsModal(appoint)" class="text-blue-700 underline">Detalhes</a>
           </p>
         </div>
         <div v-else>
           <h3 class="text-2xl text-gray-600">Você ainda não possuí nenhuma consulta terminada.</h3>
         </div>
+
+        <appointment-modal
+          v-if="isDetailsModalOpen"
+          :appointment="selectedAppoint"
+          @close="toggleDetailsModal"
+        ></appointment-modal>
       </div>
     </div>
 
@@ -139,12 +145,14 @@ import { mapState } from "vuex";
 import DashboardHeader from "@/components/dashboard/DashboardHeader.vue";
 import ListAppointments from "@/components/ListAppointmentsComponent.vue";
 import MakeAppointment from "@/components/patients/MakeAppointment.vue";
+import AppointmentModal from "@/components/AppointmentModal.vue";
 
 export default {
   components: {
     ListAppointments,
     DashboardHeader,
     MakeAppointment,
+    AppointmentModal,
   },
 
   computed: {
@@ -164,6 +172,8 @@ export default {
         contactSuccess: undefined,
       },
       completedAppointments: [],
+      isDetailsModalOpen: false,
+      selectedAppoint: {},
     };
   },
 
@@ -177,6 +187,15 @@ export default {
         .catch((err) => {
           throw new Error(err);
         });
+    },
+
+    toggleDetailsModal(appoint) {
+      if (this.isDetailsModalOpen) {
+        this.isDetailsModalOpen = false;
+      } else {
+        this.selectedAppoint = appoint;
+        this.isDetailsModalOpen = true;
+      }
     },
 
     showHistory() {
